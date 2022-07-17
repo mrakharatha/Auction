@@ -1908,7 +1908,7 @@ footer {
 
 /*Header Sectionn Starts Here*/
 .header-top-wrapper {
-    justify-content: space-between;
+    justify-content: end;
 }
 
 .header-top-wrapper .customer-support, .header-top-wrapper .cart-button-area {

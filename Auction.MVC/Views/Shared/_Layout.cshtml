@@ -1,48 +1,245 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Auction.MVC</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>مزایده | @ViewData["Title"] </title>
+
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/all.min.css">
+    <link rel="stylesheet" href="./assets/css/animate.css">
+    <link rel="stylesheet" href="./assets/css/nice-select.css">
+    <link rel="stylesheet" href="./assets/css/owl.min.css">
+    <link rel="stylesheet" href="./assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="./assets/css/flaticon.css">
+    <link rel="stylesheet" href="./assets/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="./assets/css/main.css">
+
+    <link rel="shortcut icon" href="./assets/images/favicon.png" type="image/x-icon">
 </head>
+
 <body>
+    <!--============= ScrollToTop Section Starts Here =============-->
+    <div class="overlayer" id="overlayer">
+        <div class="loader">
+            <div class="loader-inner"></div>
+        </div>
+    </div>
+    <a href="#0" class="scrollToTop"><i class="fas fa-angle-up"></i></a>
+    <div class="overlay"></div>
+    <!--============= ScrollToTop Section Ends Here =============-->
+
+
+    <!--============= Header Section Starts Here =============-->
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="header-top">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Auction.MVC</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                <div class="header-top-wrapper">
+                    <ul class="cart-button-area">
+                        <li>
+                            <a href="sign-in.html" class="user-button"><i class="flaticon-user"></i></a>
+                        </li>                        
                     </ul>
                 </div>
             </div>
-        </nav>
+        </div>
+        <div class="header-bottom">
+            <div class="container">
+                <div class="header-wrapper">
+                    <div class="logo">
+                        <a href="./index.html">
+                            <img src="./assets/images/logo/logo.png" alt="logo">
+                        </a>
+                    </div>
+                    <ul class="menu ml-auto">
+                        <li>
+                            <a href="#0">خانه</a>
+                            <ul class="submenu">
+                                <li>
+                                    <a href="./index.html">صفحه اصلی یک</a>
+                                </li>
+                                <li>
+                                    <a href="./index-2.html">صفحه اصلی دو</a>
+                                </li>
+                                <li>
+                                    <a href="./index-3.html">صفحه اصلی سه</a>
+                                </li>
+                                <li>
+                                    <a href="./index-4.html">صفحه اصلی چهار</a>
+                                </li>
+                                <li>
+                                    <a href="./index-5.html">صفحه اصلی پنج</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="./product.html">حراج</a>
+                        </li>
+                        <li>
+                            <a href="#0">صفحات</a>
+                            <ul class="submenu">
+                                <li>
+                                    <a href="#0">محصولات</a>
+                                    <ul class="submenu">
+                                        <li>
+                                            <a href="./product.html">صفحه محصول 1</a>
+                                        </li>
+                                        <li>
+                                            <a href="./product-2.html">صفحه محصول 2</a>
+                                        </li>
+                                        <li>
+                                            <a href="./product-details.html">مشخصات محصول</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#0">حساب من</a>
+                                    <ul class="submenu">
+                                        <li>
+                                            <a href="./sign-up.html">ثبت نام</a>
+                                        </li>
+                                        <li>
+                                            <a href="./sign-in.html">ورود</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#0">داشبورد</a>
+                                    <ul class="submenu">
+                                        <li>
+                                            <a href="./dashboard.html">داشبورد</a>
+                                        </li>
+                                        <li>
+                                            <a href="./profile.html">پروفایل شخصی</a>
+                                        </li>
+                                        <li>
+                                            <a href="./my-bid.html">پیشنهادات من</a>
+                                        </li>
+                                        <li>
+                                            <a href="./winning-bids.html">پیشنهادات برنده</a>
+                                        </li>
+                                        <li>
+                                            <a href="./notifications.html">هشدار های من</a>
+                                        </li>
+                                        <li>
+                                            <a href="./my-favorites.html">علایق من</a>
+                                        </li>
+                                        <li>
+                                            <a href="./referral.html">مراجعات</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="./about.html">درباره ما</a>
+                                </li>
+                                <li>
+                                    <a href="./faqs.html">سوالات</a>
+                                </li>
+                                <li>
+                                    <a href="./error.html">خطای 404</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="./contact.html">تماس با ما</a>
+                        </li>
+                    </ul>
+                    <form class="search-form">
+                        <input type="text" placeholder="جستجوی مارک ، مدل ....">
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+                    <div class="search-bar d-md-none">
+                        <a href="#0"><i class="fas fa-search"></i></a>
+                    </div>
+                    <div class="header-bar d-lg-none">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+ 
+    
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - Auction.MVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+
+  
+
+
+
+
+  
+
+
+   
+
+
+    @RenderBody()
+
+
+
+
+    <!--============= Footer Section Starts Here =============-->
+    <footer class="bg_img padding-top oh" data-background="./assets/images/footer/footer-bg.jpg">
+        <div class="footer-top-shape">
+            <img src="./assets/css/img/footer-top-shape.png" alt="css">
+        </div>
+        <div class="anime-wrapper">
+            <div class="anime-1 plus-anime">
+                <img src="./assets/images/footer/p1.png" alt="footer">
+            </div>
+            <div class="anime-2 plus-anime">
+                <img src="./assets/images/footer/p2.png" alt="footer">
+            </div>
+            <div class="anime-3 plus-anime">
+                <img src="./assets/images/footer/p3.png" alt="footer">
+            </div>
+            <div class="anime-5 zigzag">
+                <img src="./assets/images/footer/c2.png" alt="footer">
+            </div>
+            <div class="anime-6 zigzag">
+                <img src="./assets/images/footer/c3.png" alt="footer">
+            </div>
+            <div class="anime-7 zigzag">
+                <img src="./assets/images/footer/c4.png" alt="footer">
+            </div>
+        </div>
+   
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="copyright-area">
+                    <div class="footer-bottom-wrapper">
+                        <div class="logo">
+                            <a href="index.html"><img src="./assets/images/logo/footer-logo.png" alt="logo"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    <!--============= Footer Section Ends Here =============-->
+
+
+
+    <script src="./assets/js/jquery-3.3.1.min.js"></script>
+    <script src="./assets/js/modernizr-3.6.0.min.js"></script>
+    <script src="./assets/js/plugins.js"></script>
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <script src="./assets/js/isotope.pkgd.min.js"></script>
+    <script src="./assets/js/wow.min.js"></script>
+    <script src="./assets/js/waypoints.js"></script>
+    <script src="./assets/js/nice-select.js"></script>
+    <script src="./assets/js/counterup.min.js"></script>
+    <script src="./assets/js/owl.min.js"></script>
+    <script src="./assets/js/magnific-popup.min.js"></script>
+    <script src="assets/js/yscountdown.min.js"></script>
+    <script src="assets/js/jquery-ui.min.js"></script>
+    <script src="./assets/js/main.js"></script>
 </body>
+
 </html>
