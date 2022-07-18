@@ -1,4 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Auction.Application.Interfaces;
+using Auction.Application.Services;
+using Auction.Domain.Interfaces;
+using Auction.Infra.Data.Repository;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Auction.Infra.IOC
 {
@@ -10,14 +14,15 @@ namespace Auction.Infra.IOC
 
             #region Application Layer
 
-          
+            service.AddScoped<IUserService, UserService>();
 
-         
-   #endregion
+
+            #endregion
 
             #region Infra Data Layer
 
-         
+            service.AddScoped<IUserRepository, UserRepository>();
+
 
             #endregion
         }

@@ -1,0 +1,303 @@
+﻿@using Auction.Application.Interfaces
+@using Auction.Application.Utilities
+@{
+    ViewData["Title"] = "داشبورد";
+}
+
+<div class="hero-section style-2 pb-lg-400">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li>
+                <a asp-controller="Home" asp-action="Index">خانه</a>
+            </li>
+            <li>
+                <span>داشبورد</span>
+            </li>
+        </ul>
+    </div>
+    <div class="bg_img hero-bg bottom_center" data-background="./assets/images/banner/hero-bg.png"></div>
+</div>
+
+
+<section class="dashboard-section padding-bottom mt--240 mt-lg--325 pos-rel">
+    <div class="container">
+        <div class="row justify-content-center">
+            <partial name="_Dashboard" />
+            <div class="col-lg-8">
+                <div class="dashboard-widget mb-40">
+                    <div class="dashboard-title mb-30">
+                        <h5 class="title">فعالیت من</h5>
+                    </div>
+                    <div class="row justify-content-center mb-30-none">
+                        <div class="col-md-4 col-sm-6">
+                            <div class="dashboard-item">
+                                <div class="thumb">
+                                    <img src="./assets/images/dashboard/01.png" alt="dashboard">
+                                </div>
+                                <div class="content">
+                                    <h2 class="title"><span class="counter">80</span></h2>
+                                    <h6 class="info">پیشنهادات فعال</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6">
+                            <div class="dashboard-item">
+                                <div class="thumb">
+                                    <img src="./assets/images/dashboard/02.png" alt="dashboard">
+                                </div>
+                                <div class="content">
+                                    <h2 class="title"><span class="counter">15</span></h2>
+                                    <h6 class="info">موارد برنده</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6">
+                            <div class="dashboard-item">
+                                <div class="thumb">
+                                    <img src="./assets/images/dashboard/03.png" alt="dashboard">
+                                </div>
+                                <div class="content">
+                                    <h2 class="title"><span class="counter">115</span></h2>
+                                    <h6 class="info">موارد دلخواه</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dashboard-widget">
+                    <h5 class="title mb-10">خرید</h5>
+                    <div class="dashboard-purchasing-tabs">
+                        <ul class="nav-tabs nav">
+                            <li>
+                                <a href="#current" class="active" data-toggle="tab">جاری</a>
+                            </li>
+                            <li>
+                                <a href="#pending" data-toggle="tab">در انتظار</a>
+                            </li>
+                            <li>
+                                <a href="#history" data-toggle="tab">گذشته</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane show active fade" id="current">
+                                <table class="purchasing-table">
+                                    <thead>
+                                    <th>مورد</th>
+                                    <th>قیمت مناقصه</th>
+                                    <th>بالاترین پیشنهاد</th>
+                                    <th>کمترین پیشنهاد</th>
+                                    <th>انقضا</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td data-purchase="item">هیوندای سوناتا</td>
+                                            <td data-purchase="bid price">1.000.000 تومان</td>
+                                            <td data-purchase="highest bid">1.000.000 تومان</td>
+                                            <td data-purchase="lowest bid">1.400.000 تومان</td>
+                                            <td data-purchase="expires">10/7/1399</td>
+                                        </tr>
+                                        <tr>
+                                            <td data-purchase="item">هیوندای سوناتا</td>
+                                            <td data-purchase="bid price">1.000.000 تومان</td>
+                                            <td data-purchase="highest bid">1.000.000 تومان</td>
+                                            <td data-purchase="lowest bid">1.400.000 تومان</td>
+                                            <td data-purchase="expires">10/7/1399</td>
+                                        </tr>
+                                        <tr>
+                                            <td data-purchase="item">هیوندای سوناتا</td>
+                                            <td data-purchase="bid price">1.000.000 تومان</td>
+                                            <td data-purchase="highest bid">1.000.000 تومان</td>
+                                            <td data-purchase="lowest bid">1.400.000 تومان</td>
+                                            <td data-purchase="expires">10/7/1399</td>
+                                        </tr>
+                                        <tr>
+                                            <td data-purchase="item">هیوندای سوناتا</td>
+                                            <td data-purchase="bid price">1.000.000 تومان</td>
+                                            <td data-purchase="highest bid">1.000.000 تومان</td>
+                                            <td data-purchase="lowest bid">1.400.000 تومان</td>
+                                            <td data-purchase="expires">10/7/1399</td>
+                                        </tr>
+                                        <tr>
+                                            <td data-purchase="item">هیوندای سوناتا</td>
+                                            <td data-purchase="bid price">1.000.000 تومان</td>
+                                            <td data-purchase="highest bid">1.000.000 تومان</td>
+                                            <td data-purchase="lowest bid">1.400.000 تومان</td>
+                                            <td data-purchase="expires">10/7/1399</td>
+                                        </tr>
+                                        <tr>
+                                            <td data-purchase="item">هیوندای سوناتا</td>
+                                            <td data-purchase="bid price">1.000.000 تومان</td>
+                                            <td data-purchase="highest bid">1.000.000 تومان</td>
+                                            <td data-purchase="lowest bid">1.400.000 تومان</td>
+                                            <td data-purchase="expires">10/7/1399</td>
+                                        </tr>
+                                        <tr>
+                                            <td data-purchase="item">هیوندای سوناتا</td>
+                                            <td data-purchase="bid price">1.000.000 تومان</td>
+                                            <td data-purchase="highest bid">1.000.000 تومان</td>
+                                            <td data-purchase="lowest bid">1.400.000 تومان</td>
+                                            <td data-purchase="expires">10/7/1399</td>
+                                        </tr>
+                                        <tr>
+                                            <td data-purchase="item">هیوندای سوناتا</td>
+                                            <td data-purchase="bid price">1.000.000 تومان</td>
+                                            <td data-purchase="highest bid">1.000.000 تومان</td>
+                                            <td data-purchase="lowest bid">1.400.000 تومان</td>
+                                            <td data-purchase="expires">10/7/1399</td>
+                                        </tr>
+                                        <tr>
+                                            <td data-purchase="item">هیوندای سوناتا</td>
+                                            <td data-purchase="bid price">1.000.000 تومان</td>
+                                            <td data-purchase="highest bid">1.000.000 تومان</td>
+                                            <td data-purchase="lowest bid">1.400.000 تومان</td>
+                                            <td data-purchase="expires">10/7/1399</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane show fade" id="pending">
+                                <table class="purchasing-table">
+                                    <thead>
+                                    <th>مورد</th>
+                                    <th>قیمت مناقصه</th>
+                                    <th>بالاترین پیشنهاد</th>
+                                    <th>کمترین پیشنهاد</th>
+                                    <th>انقضا</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td data-purchase="item">هیوندای سوناتا</td>
+                                            <td data-purchase="bid price">1.000.000 تومان</td>
+                                            <td data-purchase="highest bid">1.000.000 تومان</td>
+                                            <td data-purchase="lowest bid">1.400.000 تومان</td>
+                                            <td data-purchase="expires">10/7/1399</td>
+                                        </tr>
+                                        <tr>
+                                            <td data-purchase="item">هیوندای سوناتا</td>
+                                            <td data-purchase="bid price">1.000.000 تومان</td>
+                                            <td data-purchase="highest bid">1.000.000 تومان</td>
+                                            <td data-purchase="lowest bid">1.400.000 تومان</td>
+                                            <td data-purchase="expires">10/7/1399</td>
+                                        </tr>
+                                        <tr>
+                                            <td data-purchase="item">هیوندای سوناتا</td>
+                                            <td data-purchase="bid price">1.000.000 تومان</td>
+                                            <td data-purchase="highest bid">1.000.000 تومان</td>
+                                            <td data-purchase="lowest bid">1.400.000 تومان</td>
+                                            <td data-purchase="expires">10/7/1399</td>
+                                        </tr>
+                                        <tr>
+                                            <td data-purchase="item">هیوندای سوناتا</td>
+                                            <td data-purchase="bid price">1.000.000 تومان</td>
+                                            <td data-purchase="highest bid">1.000.000 تومان</td>
+                                            <td data-purchase="lowest bid">1.400.000 تومان</td>
+                                            <td data-purchase="expires">10/7/1399</td>
+                                        </tr>
+                                        <tr>
+                                            <td data-purchase="item">هیوندای سوناتا</td>
+                                            <td data-purchase="bid price">1.000.000 تومان</td>
+                                            <td data-purchase="highest bid">1.000.000 تومان</td>
+                                            <td data-purchase="lowest bid">1.400.000 تومان</td>
+                                            <td data-purchase="expires">10/7/1399</td>
+                                        </tr>
+                                        <tr>
+                                            <td data-purchase="item">هیوندای سوناتا</td>
+                                            <td data-purchase="bid price">1.000.000 تومان</td>
+                                            <td data-purchase="highest bid">1.000.000 تومان</td>
+                                            <td data-purchase="lowest bid">1.400.000 تومان</td>
+                                            <td data-purchase="expires">10/7/1399</td>
+                                        </tr>
+                                        <tr>
+                                            <td data-purchase="item">هیوندای سوناتا</td>
+                                            <td data-purchase="bid price">1.000.000 تومان</td>
+                                            <td data-purchase="highest bid">1.000.000 تومان</td>
+                                            <td data-purchase="lowest bid">1.400.000 تومان</td>
+                                            <td data-purchase="expires">10/7/1399</td>
+                                        </tr>
+                                        <tr>
+                                            <td data-purchase="item">هیوندای سوناتا</td>
+                                            <td data-purchase="bid price">1.000.000 تومان</td>
+                                            <td data-purchase="highest bid">1.000.000 تومان</td>
+                                            <td data-purchase="lowest bid">1.400.000 تومان</td>
+                                            <td data-purchase="expires">10/7/1399</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane show fade" id="history">
+                                <table class="purchasing-table">
+                                    <thead>
+                                    <th>مورد</th>
+                                    <th>قیمت مناقصه</th>
+                                    <th>بالاترین پیشنهاد</th>
+                                    <th>کمترین پیشنهاد</th>
+                                    <th>انقضا</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td data-purchase="item">هیوندای سوناتا</td>
+                                            <td data-purchase="bid price">1.000.000 تومان</td>
+                                            <td data-purchase="highest bid">1.000.000 تومان</td>
+                                            <td data-purchase="lowest bid">1.400.000 تومان</td>
+                                            <td data-purchase="expires">10/7/1399</td>
+                                        </tr>
+                                        <tr>
+                                            <td data-purchase="item">هیوندای سوناتا</td>
+                                            <td data-purchase="bid price">1.000.000 تومان</td>
+                                            <td data-purchase="highest bid">1.000.000 تومان</td>
+                                            <td data-purchase="lowest bid">1.400.000 تومان</td>
+                                            <td data-purchase="expires">10/7/1399</td>
+                                        </tr>
+                                        <tr>
+                                            <td data-purchase="item">هیوندای سوناتا</td>
+                                            <td data-purchase="bid price">1.000.000 تومان</td>
+                                            <td data-purchase="highest bid">1.000.000 تومان</td>
+                                            <td data-purchase="lowest bid">1.400.000 تومان</td>
+                                            <td data-purchase="expires">10/7/1399</td>
+                                        </tr>
+                                        <tr>
+                                            <td data-purchase="item">هیوندای سوناتا</td>
+                                            <td data-purchase="bid price">1.000.000 تومان</td>
+                                            <td data-purchase="highest bid">1.000.000 تومان</td>
+                                            <td data-purchase="lowest bid">1.400.000 تومان</td>
+                                            <td data-purchase="expires">10/7/1399</td>
+                                        </tr>
+                                        <tr>
+                                            <td data-purchase="item">هیوندای سوناتا</td>
+                                            <td data-purchase="bid price">1.000.000 تومان</td>
+                                            <td data-purchase="highest bid">1.000.000 تومان</td>
+                                            <td data-purchase="lowest bid">1.400.000 تومان</td>
+                                            <td data-purchase="expires">10/7/1399</td>
+                                        </tr>
+                                        <tr>
+                                            <td data-purchase="item">هیوندای سوناتا</td>
+                                            <td data-purchase="bid price">1.000.000 تومان</td>
+                                            <td data-purchase="highest bid">1.000.000 تومان</td>
+                                            <td data-purchase="lowest bid">1.400.000 تومان</td>
+                                            <td data-purchase="expires">10/7/1399</td>
+                                        </tr>
+                                        <tr>
+                                            <td data-purchase="item">هیوندای سوناتا</td>
+                                            <td data-purchase="bid price">1.000.000 تومان</td>
+                                            <td data-purchase="highest bid">1.000.000 تومان</td>
+                                            <td data-purchase="lowest bid">1.400.000 تومان</td>
+                                            <td data-purchase="expires">10/7/1399</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section script
+    {
+    <script>
+        $("#dashboard").addClass('active');
+    </script>
+            }

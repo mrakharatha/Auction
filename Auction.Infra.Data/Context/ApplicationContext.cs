@@ -3,6 +3,8 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Auction.Application.Utilities;
+using Auction.Domain.Models;
+using Auction.Infra.Data.Seeder;
 using Microsoft.EntityFrameworkCore;
 
 namespace Auction.Infra.Data.Context
@@ -14,6 +16,7 @@ namespace Auction.Infra.Data.Context
 
         }
 
+        public DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var cascadeFKs = modelBuilder.Model.GetEntityTypes()
@@ -22,6 +25,9 @@ namespace Auction.Infra.Data.Context
 
             foreach (var fk in cascadeFKs)
                 fk.DeleteBehavior = DeleteBehavior.Restrict;
+
+            var assembly = typeof(UserSeeder).Assembly;
+            modelBuilder.ApplyConfigurationsFromAssembly(assembly);
         }
 
         public override int SaveChanges()

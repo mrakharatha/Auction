@@ -48,7 +48,7 @@ namespace Auction.MVC
 
             services.AddDbContext<ApplicationContext>(options =>
                 {
-                    options.UseSqlServer(Configuration.GetConnectionString("Default"));
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultContextConnection"));
                 }
             );
             DependencyContainer.RegisterServices(services);

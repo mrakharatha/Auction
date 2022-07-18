@@ -9,6 +9,14 @@ namespace Auction.Application.Generator
         {
             return Guid.NewGuid().ToString().Replace("-", "");
         }
+        public static string GenerateAvatar()
+        {
+            string[] avatar = new[]
+                {"client01.png", "client02.png", "client03.png", "client04.png", "client05.png", "client06.png"};
+            Random rand = new Random();
+            return avatar[rand.Next(0, 5)];
+        }
+
         public static string GenerateRandom()
         {
             int _min = 1;

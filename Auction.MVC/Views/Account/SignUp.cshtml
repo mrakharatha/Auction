@@ -1,0 +1,58 @@
+﻿@model Auction.Domain.Models.User
+@{
+    ViewData["Title"] = "ثبت نام";
+}
+
+<div class="hero-section">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li>
+                <a asp-controller="Home" asp-action="Index">خانه</a>
+            </li>
+            <li>
+                <span>ثبت نام</span>
+            </li>
+        </ul>
+    </div>
+    <div class="bg_img hero-bg bottom_center" data-background="./assets/images/banner/hero-bg.png"></div>
+</div>
+
+
+
+<section class="account-section padding-bottom">
+    <div class="container">
+        <div class="account-wrapper mt--100 mt-lg--440">
+            <div class="left-side">
+                <div class="section-header">
+                    <h2 class="title">ثبت نام</h2>
+                    <p>خوشحالیم که اینجا هستید!</p>
+                </div>
+                <form class="login-form" method="post">
+                    <div class="form-group">
+                        <label asp-for="Email"><i class="far fa-envelope"></i></label>
+                        <input type="text" asp-for="Email" placeholder="آدرس ایمیل">
+                    </div>
+                    <span asp-validation-for="Email" class="text-danger mb-30"></span>
+
+                    <div class="form-group">
+                        <label asp-for="Password"><i class="fas fa-lock"></i></label>
+                        <input type="password" asp-for="Password" placeholder="کلمه عبور">
+                        <span class="pass-type"><i class="fas fa-eye"></i></span>
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger mb-30"></span>
+
+                    <div class="form-group mb-0">
+                        <button type="submit" class="custom-button">ثبت نام</button>
+                    </div>
+                </form>
+            </div>
+            <div class="right-side cl-white">
+                <div class="section-header mb-0">
+                    <h3 class="title mt-0">حساب کاربری دارید؟</h3>
+                    <p>وارد سیستم شوید و به داشبورد خود بروید.</p>
+                    <a asp-controller="Account" asp-action="SignIn" class="custom-button transparent">ورود</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

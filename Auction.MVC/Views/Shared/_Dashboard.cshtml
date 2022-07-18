@@ -1,0 +1,48 @@
+﻿@using Auction.Application.Interfaces
+@using Auction.Application.Utilities
+@inject IUserService UserService;
+@{
+    var user = UserService.GetUser(User.GetUserId());
+}
+
+<div class="col-sm-10 col-md-7 col-lg-4">
+                    <div class="dashboard-widget mb-30 mb-lg-0">
+                        <div class="user">
+                            <div class="thumb-area">
+                                <div class="thumb">
+                                    <img src="./assets/images/client/@user.Avatar" alt="user">
+                                </div>
+                            </div>
+                            <div class="content">
+                                <h5 class="title"><a href="#0">@user.FullName</a></h5>
+                                <span class="username">@user.Email</span>
+                            </div>
+                        </div>
+                        <ul class="dashboard-menu">
+                            <li>
+                                <a asp-controller="Dashboard" asp-action="Index" id="dashboard"><i class="flaticon-dashboard"></i>داشبورد</a>
+                            </li>
+                            <li>
+                                <a href="profile.html"><i class="flaticon-settings"></i>پروفایل شخصی </a>
+                            </li>
+                            <li>
+                                <a href="my-bid.html"><i class="flaticon-auction"></i>پیشنهادات من</a>
+                            </li>
+                            <li>
+                                <a href="winning-bids.html"><i class="flaticon-best-seller"></i>پیشنهادات برنده</a>
+                            </li>
+                            <li>
+                                <a href="notifications.html"><i class="flaticon-alarm"></i>هشدارهای من </a>
+                            </li>
+                            <li>
+                                <a href="my-favorites.html"><i class="flaticon-star"></i>علایق من</a>
+                            </li>
+                            <li>
+                                <a href="referral.html"><i class="flaticon-shake-hand"></i>مراجعات</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Account" asp-action="Logout" ><i class="flaticon-check-1"></i>خروج</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>

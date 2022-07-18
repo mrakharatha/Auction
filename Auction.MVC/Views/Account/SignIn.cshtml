@@ -1,0 +1,70 @@
+﻿@model Auction.Domain.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "ورود";
+}
+
+<div class="hero-section">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li>
+                <a asp-controller="Home" asp-action="Index">خانه</a>
+            </li>
+            <li>
+                <span>ورود</span>
+            </li>
+        </ul>
+    </div>
+    <div class="bg_img hero-bg bottom_center" data-background="./assets/images/banner/hero-bg.png"></div>
+</div>
+
+
+
+    <section class="account-section padding-bottom">
+        <div class="container">
+            <div class="account-wrapper mt--100 mt-lg--440">
+                <div class="left-side">
+                    <div class="section-header">
+                        <h2 class="title">سلام</h2>
+                        <p>وارد حساب کاربری خود شوید</p>
+                    </div>
+                    @if (TempData["Result"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            ثبت نام با موفقیت انجام شد !
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span style="position: absolute; right: 30px; top: 30%;"
+                                      aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                    }
+
+                    <form class="login-form" method="post">
+                        <input type="hidden" value="@ViewBag.returnUrl" asp-for="ReturnUrl" />
+                        <div class="form-group">
+                            <label asp-for="Email"><i class="far fa-envelope"></i></label>
+                            <input type="text" asp-for="Email" placeholder="آدرس ایمیل">
+                        </div>
+                        <span asp-validation-for="Email" class="text-danger mb-30"></span>
+
+                        <div class="form-group">
+                            <label asp-for="Password"><i class="fas fa-lock"></i></label>
+                            <input type="password" asp-for="Password" placeholder="کلمه عبور">
+                            <span class="pass-type"><i class="fas fa-eye"></i></span>
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger mb-30"></span>
+
+                        <div class="form-group mb-0">
+                            <button type="submit" class="custom-button">ورود</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="right-side cl-white">
+                    <div class="section-header mb-0">
+                        <h3 class="title mt-0">حساب کاربری</h3>
+                        <p>ثبت نام کنید و حساب خود را ایجاد کنید</p>
+                        <a asp-controller="Account" asp-action="SignUp" class="custom-button transparent">ثبت نام</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
