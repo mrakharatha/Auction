@@ -1,4 +1,8 @@
-﻿@{
+﻿@using Auction.Application.Interfaces
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@inject ICategoryService CategoryService
+@{
+    var categories = CategoryService.GetCategories();
     ViewData["Title"] = "صفحه اصلی";
 }
 
@@ -47,30 +51,13 @@
                 </div>
                 <div class="m--15">
                     <div class="browse-slider owl-theme owl-carousel">
-                        <a href="#0" class="browse-item">
-                            <img src="./assets/images/auction/01.png" alt="auction">
-                            <span class="info">خودرو</span>
-                        </a>
-                        <a href="#0" class="browse-item">
-                            <img src="./assets/images/auction/02.png" alt="auction">
-                            <span class="info">جواهر سازی</span>
-                        </a>
-                        <a href="#0" class="browse-item">
-                            <img src="./assets/images/auction/03.png" alt="auction">
-                            <span class="info">ساعت</span>
-                        </a>
-                        <a href="#0" class="browse-item">
-                            <img src="./assets/images/auction/04.png" alt="auction">
-                            <span class="info">الکترونیک</span>
-                        </a>
-                        <a href="#0" class="browse-item">
-                            <img src="./assets/images/auction/05.png" alt="auction">
-                            <span class="info">ورزش ها</span>
-                        </a>
-                        <a href="#0" class="browse-item">
-                            <img src="./assets/images/auction/06.png" alt="auction">
-                            <span class="info">مشاور املاک</span>
-                        </a>
+                      @foreach (var item in categories)
+                      {
+                          <a href="#0" class="browse-item">
+                              <img src="./assets/images/auction/@item.Image" alt="auction">
+                              <span class="info">@item.CategoryName</span>
+                          </a>
+                      }
                     </div>
                 </div>
             </div>

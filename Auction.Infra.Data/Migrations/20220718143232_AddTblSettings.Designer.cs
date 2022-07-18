@@ -4,14 +4,16 @@ using Auction.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Auction.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20220718143232_AddTblSettings")]
+    partial class AddTblSettings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -137,7 +139,7 @@ namespace Auction.Infra.Data.Migrations
                         {
                             UserId = 1,
                             Avatar = "client02.png",
-                            Email = "superadmin@gmail.com",
+                            Email = "superadmin@yazd.com",
                             FullName = "ادمین سیستم",
                             Password = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
                             RegisterDate = new DateTime(2022, 7, 18, 12, 56, 32, 968, DateTimeKind.Local).AddTicks(1379)

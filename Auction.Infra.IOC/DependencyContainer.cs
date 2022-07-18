@@ -16,6 +16,8 @@ namespace Auction.Infra.IOC
 
             service.AddScoped<IUserService, UserService>();
             service.AddScoped<IWalletService, WalletService>();
+            service.AddScoped<ICategoryService, CategoryService>();
+            service.AddScoped<ISettingService, SettingService>();
 
 
             #endregion
@@ -24,6 +26,8 @@ namespace Auction.Infra.IOC
 
             service.AddScoped<IUserRepository, UserRepository>();
             service.AddScoped<IWalletRepository, WalletRepository>();
+            service.AddScoped<ICategoryRepository, CategoryRepository>();
+            service.AddScoped<ISettingRepository, SettingRepository>();
 
 
             #endregion

@@ -4,14 +4,16 @@ using Auction.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Auction.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20220718141503_AddTblCategories")]
+    partial class AddTblCategories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,32 +77,6 @@ namespace Auction.Infra.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Auction.Domain.Models.Setting", b =>
-                {
-                    b.Property<int>("SettingId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CommissionPercentage")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GrowthLadder")
-                        .HasColumnType("int");
-
-                    b.HasKey("SettingId");
-
-                    b.ToTable("Settings");
-
-                    b.HasData(
-                        new
-                        {
-                            SettingId = 1,
-                            CommissionPercentage = 1,
-                            GrowthLadder = 1
-                        });
-                });
-
             modelBuilder.Entity("Auction.Domain.Models.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -137,7 +113,7 @@ namespace Auction.Infra.Data.Migrations
                         {
                             UserId = 1,
                             Avatar = "client02.png",
-                            Email = "superadmin@gmail.com",
+                            Email = "superadmin@yazd.com",
                             FullName = "ادمین سیستم",
                             Password = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
                             RegisterDate = new DateTime(2022, 7, 18, 12, 56, 32, 968, DateTimeKind.Local).AddTicks(1379)

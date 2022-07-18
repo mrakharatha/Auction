@@ -18,7 +18,7 @@ namespace Auction.Infra.Data.Seeder
                 {
                     UserId = 1,
                     FullName = "ادمین سیستم",
-                    Email = "superadmin@yazd.com",
+                    Email = "superadmin@gmail.com",
                     Password = SecurityHelper.GetSha256Hash("123"),
                     Avatar = "client02.png",
                     RegisterDate = new DateTime(2022, 07, 18, 12, 56, 32, 968, DateTimeKind.Local).AddTicks(1379)

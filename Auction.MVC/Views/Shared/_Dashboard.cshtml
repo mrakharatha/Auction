@@ -40,6 +40,12 @@
                             <li>
                                 <a href="referral.html"><i class="flaticon-shake-hand"></i>مراجعات</a>
                             </li>
+                            @if (User.GetUserId() == 1)
+                            {
+                                <li>
+                                    <a asp-controller="Setting" asp-action="Index" id="setting"><i class="flaticon-settings"></i>تنظیمات</a>
+                                </li>
+                            }
                             <li>
                                 <a asp-controller="Account" asp-action="Logout" ><i class="flaticon-check-1"></i>خروج</a>
                             </li>
