@@ -15,6 +15,7 @@ namespace Auction.Infra.IOC
             #region Application Layer
 
             service.AddScoped<IUserService, UserService>();
+            service.AddScoped<IWalletService, WalletService>();
 
 
             #endregion
@@ -22,6 +23,7 @@ namespace Auction.Infra.IOC
             #region Infra Data Layer
 
             service.AddScoped<IUserRepository, UserRepository>();
+            service.AddScoped<IWalletRepository, WalletRepository>();
 
 
             #endregion

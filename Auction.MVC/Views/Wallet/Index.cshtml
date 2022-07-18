@@ -1,0 +1,126 @@
+﻿@using Auction.Application.Utilities
+@using Auction.Application.Interfaces
+@using Auction.Domain.Convertors
+@model Auction.Domain.ViewModels.ChargeWalletViewModel
+@inject IWalletService WalletService
+@{
+    ViewData["Title"] = "کیف پول";
+    var wallets = WalletService.GetWalletUser(User.GetUserId());
+    int cnt = 1;
+}
+
+
+<div class="hero-section style-2 pb-lg-400">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li>
+                <a asp-controller="Home" asp-action="Index">خانه</a>
+            </li>
+            <li>
+                <span>کیف پول</span>
+            </li>
+        </ul>
+    </div>
+    <div class="bg_img hero-bg bottom_center" data-background="./assets/images/banner/hero-bg.png"></div>
+</div>
+
+<section class="dashboard-section padding-bottom mt--240 mt-lg--325 pos-rel">
+    <div class="container">
+        <div class="row justify-content-center">
+            <partial name="_Dashboard" />
+            <div class="col-lg-8">
+                <div class="dashboard-widget mb-40">
+                    <div class="dashboard-title mb-30">
+                        <h5 class="title">کیف پول</h5>
+                        @if (TempData["Result"] != null)
+                        {
+                            bool result = TempData["Result"] as bool? ?? false;
+
+                            if (result)
+                            {
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    شارژ کیف پول با موفقیت انجام شد!
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span style="position: absolute; right: 30px; top: 30%;"
+                                              aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    شارژ کیف پول با خطا مواجه شد!
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span style="position: absolute; right: 30px; top: 30%;"
+                                              aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                            }
+                         
+                        }
+                    </div>
+                    <div class="justify-content-center mb-30-none">
+                        <form asp-action="Index" method="post">
+
+                            <div class="row">
+
+                                <div class="col-md-9 col-sm-8 form-group">
+                                    <input type="number" asp-for="Amount" placeholder="مبلغ به تومان">
+                                    <span asp-validation-for="Amount" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-3 col-sm-4 ">
+                                    <button type="submit" class="btn btn-success"> شارژ کیف پول </button>
+                                </div>
+
+                            </div>
+
+                        </form>
+
+
+
+                    </div>
+                </div>
+                <div class="dashboard-widget">
+                    <div class="dashboard-purchasing-tabs">
+
+                        <div class="tab-content">
+                            <div class="tab-pane show active fade">
+                                <table class="purchasing-table">
+                                    <thead>
+                                    <th>ردیف</th>
+                                    <th>مبلغ</th>
+                                    <th>تاریخ</th>
+                                    <th>نوع تراکنش</th>
+                                    <th>شرح</th>
+                                    </thead>
+                                    <tbody>
+                                       @foreach (var item in wallets)
+                                       {
+                                           <tr>
+                                               <td >@cnt</td>
+                                               <td >@item.Amount.ToString("#,0 تومان")</td>
+                                               <td >@item.CreateDate.ToShamsi()</td>
+                                               <td >@item.WalletType.ToDisplay()</td>
+                                               <td >@item.Description</td>
+                                           </tr>
+                                           cnt++;
+                                       }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section script
+    {
+    <script>
+        $("#wallet").addClass('active');
+    </script>
+}

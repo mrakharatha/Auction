@@ -17,6 +17,7 @@ namespace Auction.Infra.Data.Context
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Wallet> Wallets { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var cascadeFKs = modelBuilder.Model.GetEntityTypes()

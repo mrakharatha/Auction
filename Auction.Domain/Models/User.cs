@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,5 +29,12 @@ namespace Auction.Domain.Models
 
         [Display(Name = "تاریخ ثبت نام")] 
         public DateTime RegisterDate { get; set; } = DateTime.Now;
+
+
+        #region Relations
+
+        public List<Wallet> Wallets { get; set; }
+
+        #endregion
     }
 }
