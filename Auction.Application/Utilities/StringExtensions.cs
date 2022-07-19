@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace Auction.Application.Utilities
 {
@@ -19,6 +20,23 @@ namespace Auction.Application.Utilities
             return value.ToString("N0"); //"123,456"
         }
 
+        public static string RemoveNumbers(this  string input)
+        {
+            var res=Regex.Replace(input, @"[\d-]", string.Empty);
+
+            res = res.Replace("1", "")
+                .Replace("2", "")
+                .Replace("3", "")
+                .Replace("4", "")
+                .Replace("5", "")
+                .Replace("6", "")
+                .Replace("7", "")
+                .Replace("8", "")
+                .Replace("9", "")
+                .Replace("0", "");
+
+            return res;
+        }
 
         public static string ToNumeric(this ulong value)
         {

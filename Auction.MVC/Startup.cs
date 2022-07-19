@@ -40,7 +40,7 @@ namespace Auction.MVC
 
             }).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
             {
-                options.LoginPath = "/Login";
+                options.LoginPath = "/SignIn";
                 options.LogoutPath = "/Logout";
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(43200);
 

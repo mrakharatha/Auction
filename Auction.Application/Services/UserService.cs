@@ -26,7 +26,7 @@ namespace Auction.Application.Services
             user.Avatar = Generator.Generator.GenerateAvatar();
             user.Password = SecurityHelper.GetSha256Hash(user.Password);
             user.Email = user.Email.Trim().ToLower();
-            user.FullName = user.Email.Split("@")[0];
+            user.FullName = user.Email.Split("@")[0].RemoveNumbers();
             AddUser(user);
         }
 
