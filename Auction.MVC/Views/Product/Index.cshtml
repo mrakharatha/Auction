@@ -43,15 +43,16 @@
                                     <tbody>
                                        @foreach (var item in Model)
                                        {
-                                           <tr>
+                                           <tr id="Product_@(item.ProductId)">
                                                <td >@cnt</td>
                                                <td >@item.ProductName</td>
                                                <td >@item.Category.CategoryName</td>
                                                <td >@item.Price.ToString("#,0 تومان")</td>
-                                               <td >@item.StartDate.ToShamsi()</td>
-                                               <td >@item.EndDate.ToShamsi()</td>
+                                               <td >@item.StartDate.ToShamsiTime()</td>
+                                               <td >@item.EndDate.ToShamsiTime()</td>
                                                <td>
-
+                                                   <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.ProductId" class="mr-2"><i class="fas fa-edit text-info"></i></a>
+                                                   <a onclick="DeleteProductId(@item.ProductId)" class="mr-2"><i class="fas fa-trash-alt text-info"></i></a>
                                                </td>
                                            </tr>
                                            cnt++;
@@ -69,8 +70,58 @@
 
 
 @section script
-    {
+{
+    
+    <script src="/assets/js/sweetalert2.all.min.js"></script>
+
     <script>
         $("#product").addClass('active');
+    </script>
+    
+    <script>
+        function DeleteProductId(id) {
+
+            Swal.fire({
+                title: 'آیا مطمئنید؟',
+                text: "این عمل قابل بازگشت نخواهد بود!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'تایید',
+                confirmButtonClass: 'btn btn-primary',
+                cancelButtonClass: 'btn btn-danger ml-1',
+                cancelButtonText: 'انصراف',
+                buttonsStyling: false,
+            }).then(function (result) {
+                if (result.value) {
+                    $.get("/Product/Delete/" + id,
+                        function (data) {
+                            if (data) {
+                                $("#Product_" + id).hide('slow');
+
+                                Swal.fire({
+                                    type: "success",
+                                    title: 'حذف شد!',
+                                    text: ' محصول با موفقیت حذف شد',
+                                    confirmButtonClass: 'btn btn-success',
+                                    confirmButtonText: 'باشه',
+                                });
+                            }
+                            else {
+                                Swal.fire({
+                                    title: "خطا!",
+                                    text: "حذف با خطا مواجه شد!",
+                                    type: "error",
+                                    confirmButtonClass: 'btn btn-primary',
+                                    confirmButtonText: 'باشه',
+                                    buttonsStyling: false,
+                                });
+                            }
+
+
+                        });
+                }
+            });
+
+        }
     </script>
 }

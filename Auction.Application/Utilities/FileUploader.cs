@@ -6,7 +6,7 @@ namespace Auction.Application.Utilities
 {
     public static class FileUploader 
     {
-        public static string Upload(IFormFile file, string path, string oldPath)
+        public static string Upload(this IFormFile file, string path, string oldPath=null)
         {
             if (file == null || !file.IsImage())
                 return oldPath;

@@ -15,15 +15,14 @@ namespace Auction.Domain.Models
         [Display(Name = "نام محصول")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public string ProductName { get; set; }
-
-        public string Image { get; set; }
-        public string TrackingCode { get; set; }
-        public string Description { get; set; }
-
         [Display(Name = "مبلغ")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [Range(1000, int.MaxValue, ErrorMessage = " مقدار  {0} بین {1} تا {2}.")]
         public int Price { get; set; }
+        public string Image { get; set; }
+        public string Description { get; set; }
+
+     
         public bool IsFinish { get; set; }
 
         [Display(Name = "تاریخ شروع")]
@@ -34,7 +33,7 @@ namespace Auction.Domain.Models
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public DateTime EndDate { get; set; }
 
-        public DateTime CreateDate { get; set; }
+        public DateTime CreateDate { get; set; }=DateTime.Now;
         public DateTime? DeleteDate { get; set; }
 
         #region Relations

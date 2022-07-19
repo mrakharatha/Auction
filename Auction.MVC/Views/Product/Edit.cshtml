@@ -1,7 +1,7 @@
 ﻿@using Auction.Application.Utilities
-@model Auction.Domain.ViewModels.ProductViewModel
+@model Auction.Domain.ViewModels.ProductEditViewModel
 @{
-    ViewData["Title"] = "افزودن";
+    ViewData["Title"] = "ویرایش";
 }
 
 <div class="hero-section style-2 pb-lg-400">
@@ -14,7 +14,7 @@
                 <a asp-controller="Product" asp-action="Index">حراج</a>
             </li>
             <li>
-                <span>افزودن</span>
+                <span>ویرایش</span>
             </li>
         </ul>
     </div>
@@ -34,6 +34,7 @@
                     <div class="justify-content-center mb-30-none">
                         <form method="post" enctype="multipart/form-data">
                             <input type="hidden" asp-for="UserId" value="@User.GetUserId()"/>
+                            <input type="hidden" asp-for="ProductId" />
                             <div class="col-md-12 col-sm-12 ">
                                 <label asp-for="CategoryId"></label>
                                 <div class="form-group">

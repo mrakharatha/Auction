@@ -80,6 +80,14 @@ namespace Auction.Domain.Convertors
             string[] parts = dateTime.Split(new[] { '/', '-' });
             return p.ToDateTime(Convert.ToInt32(parts[0]), Convert.ToInt32(parts[1]), Convert.ToInt32(parts[2]), 0, 0, 0, 0);
         }
+
+        public static DateTime ToDateTime(this string dateTime,string time)
+        {
+            TimeSpan timeSpan = TimeSpan.Parse(time);
+            PersianCalendar p = new PersianCalendar();
+            string[] parts = dateTime.Split(new[] { '/', '-' });
+            return p.ToDateTime(Convert.ToInt32(parts[0]), Convert.ToInt32(parts[1]), Convert.ToInt32(parts[2]),timeSpan.Hours,timeSpan.Minutes,timeSpan.Seconds,timeSpan.Milliseconds);
+        }
         public static string GetMonthName(int month)
         {
             switch (month)
