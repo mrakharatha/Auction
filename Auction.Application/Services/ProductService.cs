@@ -86,5 +86,63 @@ namespace Auction.Application.Services
             product.DeleteDate = DateTime.Now;
             UpdateProduct(product);
         }
+
+        public List<ProductFeature> GetFeatures(int productId)
+        {
+            return _productRepository.GetFeatures(productId);
+        }
+
+        public void AddFeature(ProductFeature feature)
+        {
+            _productRepository.AddFeature(feature);
+        }
+
+        public void DeleteFeature(int featureId)
+        {
+            _productRepository.DeleteFeature(featureId);
+        }
+
+        public List<ProductTag> GetTags(int productId)
+        {
+            return _productRepository.GetTags(productId);
+        }
+
+        public void AddTag(ProductTag tag)
+        {
+            _productRepository.AddTag(tag);
+        }
+
+        public void DeleteTag(int tagId)
+        {
+            _productRepository.DeleteTag(tagId);
+        }
+
+        public List<ProductImage> GetImages(int productId)
+        {
+            return _productRepository.GetImages(productId);
+        }
+
+        public void AddImage(ProductImage image)
+        {
+            _productRepository.AddImage(image);
+        }
+
+        public void AddImage(ProductImageViewModel model)
+        {
+            var image = model.File.Upload(nameof(ProductImage));
+
+            var productImage = new ProductImage()
+            {
+                ProductId = model.ProductId,
+                ProductImageName = image
+            };
+            AddImage(productImage);
+        }
+
+        public void DeleteImage(int imageId)
+        {
+            var imageName=_productRepository.DeleteImage(imageId);
+            FileUploader.DeleteFile(imageName);
+        }
     }
 }

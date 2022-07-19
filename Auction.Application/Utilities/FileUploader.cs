@@ -40,7 +40,7 @@ namespace Auction.Application.Utilities
                 return false;
             }
         }
-        private static void DeleteFile( string path)
+        public static void DeleteFile( string path)
         {
             if(path==null)
                 return;

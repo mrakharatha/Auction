@@ -1,0 +1,79 @@
+﻿@using Auction.Application.Utilities
+@model Auction.Domain.Models.ProductFeature
+@{
+    ViewData["Title"] = "افزودن";
+}
+
+<div class="hero-section style-2 pb-lg-400">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li>
+                <a asp-controller="Home" asp-action="Index">خانه</a>
+            </li>
+            <li>
+                <a asp-controller="Product" asp-action="Index">حراج</a>
+            </li>
+            <li>
+                <a asp-controller="ProductFeature" asp-action="Index" asp-route-id="@ViewBag.ProductId">مشخصات محصول</a>
+            </li>
+            <li>
+                <span>افزودن</span>
+            </li>
+        </ul>
+    </div>
+    <div class="bg_img hero-bg bottom_center" data-background="/assets/images/banner/hero-bg.png"></div>
+</div>
+
+
+
+
+
+<section class="dashboard-section padding-bottom mt--240 mt-lg--325 pos-rel">
+    <div class="container">
+        <div class="row justify-content-center">
+            <partial name="_Dashboard" />
+            <div class="col-lg-8">
+                <div class="dashboard-widget mb-40">
+                    <div class="justify-content-center mb-30-none">
+                        <form method="post" enctype="multipart/form-data">
+                            <input type="hidden" asp-for="ProductId" value="@ViewBag.ProductId"/>
+                           
+
+                            <div class="col-md-12 col-sm-12 ">
+                                <label asp-for="FeatureName"></label>
+                                <input type="text" asp-for="FeatureName">
+                                <span asp-validation-for="FeatureName" class="text-danger"></span>
+                            </div>
+                            
+                            
+                            <div class="col-md-12 col-sm-12 ">
+                                <label asp-for="FeatureValue"></label>
+                                <input type="text" asp-for="FeatureValue">
+                                <span asp-validation-for="FeatureValue" class="text-danger"></span>
+                            </div>
+
+
+                            <div class="form-group d-flex mt-4 justify-content-end ">
+                                <button type="submit" class="btn w-25 btn-primary">ثبت</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+    @section script
+    {
+    
+
+    <script>
+        $("#product").addClass('active');
+    </script>
+}

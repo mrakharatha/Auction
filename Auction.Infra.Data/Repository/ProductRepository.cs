@@ -65,5 +65,60 @@ namespace Auction.Infra.Data.Repository
             _context.Update(product);
             _context.SaveChanges();
         }
+
+        public List<ProductFeature> GetFeatures(int productId)
+        {
+            return _context.ProductFeatures.Where(x => x.ProductId == productId).ToList();
+        }
+
+        public void AddFeature(ProductFeature feature)
+        {
+            _context.Add(feature);
+            _context.SaveChanges();
+        }
+
+        public void DeleteFeature(int featureId)
+        {
+            var productFeature = _context.ProductFeatures.Find(featureId);
+            _context.Remove(productFeature);
+            _context.SaveChanges();
+        }
+
+        public List<ProductTag> GetTags(int productId)
+        {
+            return _context.ProductTags.Where(x => x.ProductId == productId).ToList();
+        }
+
+        public void AddTag(ProductTag tag)
+        {
+            _context.Add(tag);
+            _context.SaveChanges();
+        }
+
+        public void DeleteTag(int tagId)
+        {
+            var productTag = _context.ProductTags.Find(tagId);
+            _context.Remove(productTag);
+            _context.SaveChanges();
+        }
+
+        public List<ProductImage> GetImages(int productId)
+        {
+            return _context.ProductImages.Where(x => x.ProductId == productId).ToList();
+        }
+
+        public void AddImage(ProductImage image)
+        {
+            _context.Add(image);
+            _context.SaveChanges();
+        }
+
+        public string DeleteImage(int imageId)
+        {
+            var productImage = _context.ProductImages.Find(imageId);
+            _context.Remove(productImage);
+            _context.SaveChanges();
+            return productImage.ProductImageName;
+        }
     }
 }

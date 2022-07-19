@@ -1,9 +1,8 @@
 ﻿@using Auction.Domain.Convertors
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@model List<Auction.Domain.Models.Product>
+@model List<Auction.Domain.Models.ProductImage>
 @{
-    ViewData["Title"] = "حراج";
-    int cnt = 1;
+    ViewData["Title"] = "تصاویر محصول";
 }
 
 <div class="hero-section style-2 pb-lg-400">
@@ -13,7 +12,10 @@
                 <a asp-controller="Home" asp-action="Index">خانه</a>
             </li>
             <li>
-                <span>حراج</span>
+                <a asp-controller="Product" asp-action="Index">حراج</a>
+            </li>
+            <li>
+                <span>تصاویر محصول</span>
             </li>
         </ul>
     </div>
@@ -27,38 +29,27 @@
             <div class="col-lg-8">
                 <div class="dashboard-widget">
                     <div class="dashboard-purchasing-tabs">
-                            <a  asp-controller="Product" asp-action="Create"class="btn col-lg-2 btn-primary mb-4 mr-1">افزودن</a>
+                            <a  asp-controller="ProductImage" asp-action="Create" asp-route-id="@ViewBag.ProductId"class="btn col-lg-2 btn-primary mb-4 mr-1">افزودن</a>
                         <div class="tab-content">
                             <div class="tab-pane show active fade">
                                 <table class="purchasing-table">
                                     <thead>
-                                    <th>ردیف</th>
-                                    <th>نام</th>
-                                    <th>دسته بندی</th>
-                                    <th>مبلغ</th>
-                                    <th>تاریخ شروع </th>
-                                    <th>تاریخ پایان </th>
+                                    <th></th>
                                     <th></th>
                                     </thead>
                                     <tbody>
                                        @foreach (var item in Model)
                                        {
-                                           <tr id="Product_@(item.ProductId)">
-                                               <td >@cnt</td>
-                                               <td >@item.ProductName</td>
-                                               <td >@item.Category.CategoryName</td>
-                                               <td >@item.Price.ToString("#,0 تومان")</td>
-                                               <td >@item.StartDate.ToShamsiTime()</td>
-                                               <td >@item.EndDate.ToShamsiTime()</td>
+                                           <tr id="ProductImage_@(item.ProductImageId)">
+                                               <td >
+                                                   <div class="thumb">
+                                                       <img src="@item.ProductImageName" alt="history">
+                                                   </div>
+                                               </td>
                                                <td>
-                                                   <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.ProductId" class="mr-2"><i class="fas fa-edit text-info"></i></a>
-                                                   <a asp-controller="ProductFeature" asp-action="Index" asp-route-id="@item.ProductId" class="mr-2"><i class="fas fa-exclamation-triangle  text-info"></i></a>
-                                                   <a asp-controller="ProductTag" asp-action="Index" asp-route-id="@item.ProductId" class="mr-2"><i class="fas fa-tag  text-info"></i></a>
-                                                   <a asp-controller="ProductImage" asp-action="Index" asp-route-id="@item.ProductId" class="mr-2"><i class="fas fa-image  text-info"></i></a>
-                                                   <a onclick="DeleteProductId(@item.ProductId)" class="mr-2"><i class="fas fa-trash-alt text-info"></i></a>
+                                                   <a onclick="DeleteProductImageId(@item.ProductImageId)" class="mr-2"><i class="fas fa-trash-alt text-info"></i></a>
                                                </td>
                                            </tr>
-                                           cnt++;
                                        }
                                     </tbody>
                                 </table>
@@ -82,7 +73,7 @@
     </script>
     
     <script>
-        function DeleteProductId(id) {
+        function DeleteProductImageId(id) {
 
             Swal.fire({
                 title: 'آیا مطمئنید؟',
@@ -96,15 +87,15 @@
                 buttonsStyling: false,
             }).then(function (result) {
                 if (result.value) {
-                    $.get("/Product/Delete/" + id,
+                    $.get("/ProductImage/Delete/" + id,
                         function (data) {
                             if (data) {
-                                $("#Product_" + id).hide('slow');
+                                $("#ProductImage_" + id).hide('slow');
 
                                 Swal.fire({
                                     type: "success",
                                     title: 'حذف شد!',
-                                    text: ' محصول با موفقیت حذف شد',
+                                    text: ' تصویر محصول با موفقیت حذف شد',
                                     confirmButtonClass: 'btn btn-success',
                                     confirmButtonText: 'باشه',
                                 });

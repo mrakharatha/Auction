@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Auction.Domain.Models
@@ -40,7 +41,9 @@ namespace Auction.Domain.Models
 
         public User User { get; set; }
         public Category Category { get; set; }
-
+        public List<ProductFeature> ProductFeatures { get; set; }
+        public List<ProductTag> ProductTags { get; set; }
+        public List<ProductImage> ProductImages { get; set; }
         #endregion
     }
 }

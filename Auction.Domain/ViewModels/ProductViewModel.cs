@@ -83,4 +83,12 @@ namespace Auction.Domain.ViewModels
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public string EndTime { get; set; }
     }
+
+    public class ProductImageViewModel
+    {
+        public int ProductId { get; set; }
+        [Display(Name = "عکس محصول")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        public IFormFile File { get; set; }
+    }
 }
