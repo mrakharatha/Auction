@@ -12,7 +12,7 @@
                         <div class="user">
                             <div class="thumb-area">
                                 <div class="thumb">
-                                    <img src="./assets/images/client/@user.Avatar" alt="user">
+                                    <img src="/assets/images/client/@user.Avatar" alt="user">
                                 </div>
                             </div>
                             <div class="content">
@@ -39,6 +39,9 @@
                             </li>
                             <li>
                                 <a href="referral.html"><i class="flaticon-shake-hand"></i>مراجعات</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Product" asp-action="Index" id="product"><i class="flaticon-bag"></i>حراج</a>
                             </li>
                             @if (User.GetUserId() == 1)
                             {

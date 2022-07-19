@@ -35,7 +35,7 @@ namespace Auction.Domain.Models
         #region Relations
 
         public List<Wallet> Wallets { get; set; }
-
+        public List<Product> Products { get; set; }
         #endregion
     }
 }

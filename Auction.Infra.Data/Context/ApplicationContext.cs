@@ -20,6 +20,7 @@ namespace Auction.Infra.Data.Context
         public DbSet<Wallet> Wallets { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Setting> Settings { get; set; }
+        public DbSet<Product> Products { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var cascadeFKs = modelBuilder.Model.GetEntityTypes()
@@ -28,6 +29,8 @@ namespace Auction.Infra.Data.Context
 
             foreach (var fk in cascadeFKs)
                 fk.DeleteBehavior = DeleteBehavior.Restrict;
+
+            modelBuilder.Entity<Product>().HasQueryFilter(x => x.DeleteDate == null);
 
             var assembly = typeof(UserSeeder).Assembly;
             modelBuilder.ApplyConfigurationsFromAssembly(assembly);

@@ -1,0 +1,76 @@
+﻿@using Auction.Domain.Convertors
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<Auction.Domain.Models.Product>
+@{
+    ViewData["Title"] = "حراج";
+    int cnt = 1;
+}
+
+<div class="hero-section style-2 pb-lg-400">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li>
+                <a asp-controller="Home" asp-action="Index">خانه</a>
+            </li>
+            <li>
+                <span>حراج</span>
+            </li>
+        </ul>
+    </div>
+    <div class="bg_img hero-bg bottom_center" data-background="/assets/images/banner/hero-bg.png"></div>
+</div>
+
+<section class="dashboard-section padding-bottom mt--240 mt-lg--325 pos-rel">
+    <div class="container">
+        <div class="row justify-content-center">
+            <partial name="_Dashboard" />
+            <div class="col-lg-8">
+                <div class="dashboard-widget">
+                    <div class="dashboard-purchasing-tabs">
+                            <a  asp-controller="Product" asp-action="Create"class="btn col-lg-2 btn-primary mb-4 mr-1">افزودن</a>
+                        <div class="tab-content">
+                            <div class="tab-pane show active fade">
+                                <table class="purchasing-table">
+                                    <thead>
+                                    <th>ردیف</th>
+                                    <th>نام</th>
+                                    <th>دسته بندی</th>
+                                    <th>مبلغ</th>
+                                    <th>تاریخ شروع </th>
+                                    <th>تاریخ پایان </th>
+                                    <th></th>
+                                    </thead>
+                                    <tbody>
+                                       @foreach (var item in Model)
+                                       {
+                                           <tr>
+                                               <td >@cnt</td>
+                                               <td >@item.ProductName</td>
+                                               <td >@item.Category.CategoryName</td>
+                                               <td >@item.Price.ToString("#,0 تومان")</td>
+                                               <td >@item.StartDate.ToShamsi()</td>
+                                               <td >@item.EndDate.ToShamsi()</td>
+                                               <td>
+
+                                               </td>
+                                           </tr>
+                                           cnt++;
+                                       }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section script
+    {
+    <script>
+        $("#product").addClass('active');
+    </script>
+}

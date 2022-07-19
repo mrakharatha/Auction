@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Auction.Domain.Models
 {
@@ -8,5 +9,11 @@ namespace Auction.Domain.Models
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
         public string Image { get; set; }
+
+        #region Relations
+
+        public List<Product> Products { get; set; }
+
+        #endregion
     }
 }
