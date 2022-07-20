@@ -87,6 +87,11 @@ namespace Auction.Application.Services
             UpdateProduct(product);
         }
 
+        public List<AuctionViewModel> GetAuction(DateTime dateTime)
+        {
+            return _productRepository.GetAuction(dateTime);
+        }
+
         public List<ProductFeature> GetFeatures(int productId)
         {
             return _productRepository.GetFeatures(productId);

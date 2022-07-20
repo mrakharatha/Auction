@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Auction.Domain.Models;
 using Auction.Domain.ViewModels;
 
@@ -14,7 +15,7 @@ namespace Auction.Domain.Interfaces
 
 
 
-
+        List<AuctionViewModel> GetAuction(DateTime dateTime);
         List<ProductFeature> GetFeatures(int productId);
         void AddFeature(ProductFeature feature);
         void DeleteFeature(int featureId);

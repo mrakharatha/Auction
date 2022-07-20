@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Auction.Domain.Convertors;
 using Auction.Domain.Interfaces;
@@ -64,6 +65,21 @@ namespace Auction.Infra.Data.Repository
         {
             _context.Update(product);
             _context.SaveChanges();
+        }
+
+        public List<AuctionViewModel> GetAuction(DateTime dateTime)
+        {
+          return  _context.Products
+                .Include(x => x.Category)
+                .Where(x => !x.IsFinish && x.StartDate <= dateTime && x.EndDate >= dateTime)
+                .ToList()
+                .GroupBy(
+                    p => p.CategoryId,
+                    (key, g) => new AuctionViewModel
+                    {
+                        Products = g.OrderByDescending(x => x.StartDate).Take(3).ToList(),
+                        Category = g.FirstOrDefault().Category
+                    }).ToList();
         }
 
         public List<ProductFeature> GetFeatures(int productId)
