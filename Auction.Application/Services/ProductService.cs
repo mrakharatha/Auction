@@ -23,6 +23,11 @@ namespace Auction.Application.Services
             return _productRepository.GetProducts(userId);
         }
 
+        public List<Product> GetProducts(int? categoryId, string filter,DateTime dateTime)
+        {
+            return _productRepository.GetProducts(categoryId, filter,dateTime);
+        }
+
         public void AddProduct(ProductViewModel model)
         {
             var image = model.File.Upload(nameof(Product));
@@ -36,7 +41,7 @@ namespace Auction.Application.Services
                 Description = model.Description,
                 Image = image,
                 StartDate = model.StartDate.ToDateTime(model.StartTime),
-                EndDate = model.StartDate.ToDateTime(model.EndTime),
+                EndDate = model.EndDate.ToDateTime(model.EndTime),
             };
 
             AddProduct(product);
@@ -50,6 +55,11 @@ namespace Auction.Application.Services
         public Product GetProduct(int productId)
         {
             return _productRepository.GetProduct(productId);
+        }
+
+        public ProductDetailViewModel GetProductDetail(int productId)
+        {
+            return _productRepository.GetProductDetail(productId);
         }
 
         public ProductEditViewModel GetProductViewModel(int productId)
@@ -69,7 +79,7 @@ namespace Auction.Application.Services
             product.Description = model.Description;
             product.Image = image;
             product.StartDate = model.StartDate.ToDateTime(model.StartTime);
-            product.EndDate = model.StartDate.ToDateTime(model.EndTime);
+            product.EndDate = model.EndDate.ToDateTime(model.EndTime);
 
             UpdateProduct(product);
         }

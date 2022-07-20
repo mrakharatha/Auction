@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Auction.Domain.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace Auction.Domain.ViewModels
@@ -84,6 +86,17 @@ namespace Auction.Domain.ViewModels
         public string EndTime { get; set; }
     }
 
+    public class ProductDetailViewModel
+    {
+        public int ProductId { get; set; }
+        public string ProductName { get; set; }
+        public string ProductImage { get; set; }
+        public string FullName { get; set; }
+        public int Price { get; set; }
+        public string  Description { get; set; }
+        public List<ProductImage> ProductImages { get; set; }
+        public List<ProductFeature> ProductFeatures { get; set; }
+    }
     public class ProductImageViewModel
     {
         public int ProductId { get; set; }

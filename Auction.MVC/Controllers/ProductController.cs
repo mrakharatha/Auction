@@ -1,4 +1,5 @@
-﻿using Auction.Application.Interfaces;
+﻿using System;
+using Auction.Application.Interfaces;
 using Auction.Application.Utilities;
 using Auction.Domain.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -77,6 +78,17 @@ namespace Auction.MVC.Controllers
             return RedirectToAction("Index", "Product");
         }
 
+
+        public IActionResult Search(int? categoryId=null,string filter =null)
+        {
+            return View(_productService.GetProducts(categoryId,filter,DateTime.Now));
+        }
+
+
+        public IActionResult Detail(int id)
+        {
+            return View(_productService.GetProductDetail(id));
+        }
 
         public bool Delete(int id)
         {

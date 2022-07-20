@@ -30,6 +30,41 @@ namespace Auction.Infra.Data.Repository
                 .ToList();
         }
 
+        public List<Product> GetProducts(int? categoryId, string filter,DateTime dateTime)
+        {
+            IQueryable<Product> query = _context.Products.Where(x => !x.IsFinish && x.StartDate <= dateTime && x.EndDate >= dateTime);
+
+            if (categoryId != null)
+                query = query.Where(x => x.CategoryId.Equals(categoryId));
+
+            if (!string.IsNullOrWhiteSpace(filter))
+                query = query.Where(x => x.ProductName.Contains(filter) || x.Category.CategoryName.Contains(filter));
+
+
+            return query.ToList();
+        }
+
+        public ProductDetailViewModel GetProductDetail(int productId)
+        {
+            return _context.Products
+                .Where(x => x.ProductId == productId)
+                .Include(x=> x.User)
+                .Include(x=> x.ProductFeatures)
+                .Include(x=> x.ProductImages)
+                .Select(x=> new ProductDetailViewModel()
+                {
+                    ProductId = x.ProductId,
+                    ProductName = x.ProductName,
+                    Price = x.Price,
+                    FullName = x.User.FullName,
+                    Description = x.Description,
+                    ProductFeatures = x.ProductFeatures,
+                    ProductImages = x.ProductImages,
+                    ProductImage = x.Image
+                })
+                .SingleOrDefault();
+        }
+
         public void AddProduct(Product product)
         {
             _context.Add(product);

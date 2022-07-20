@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="/assets/css/jquery-ui.min.css">
     <link rel="stylesheet" href="/assets/css/main.css">
     <link rel="shortcut icon" href="/assets/images/favicon.png" type="image/x-icon">
-    
+
     @await RenderSectionAsync("style",false)
 </head>
 
@@ -35,9 +35,9 @@
     <!--============= ScrollToTop Section Ends Here =============-->
 
 
-<partial name="_Header"/>
-@RenderBody()
-<partial name="_Footer"/>
+    <partial name="_Header" />
+    @RenderBody()
+    <partial name="_Footer" />
 
 
     <script src="/assets/js/jquery-3.3.1.min.js"></script>
@@ -51,14 +51,15 @@
     <script src="/assets/js/counterup.min.js"></script>
     <script src="/assets/js/owl.min.js"></script>
     <script src="/assets/js/magnific-popup.min.js"></script>
-    <script src="assets/js/yscountdown.min.js"></script>
-    <script src="assets/js/jquery-ui.min.js"></script>
-<script src="/assets/js/main.js"></script>
-<partial name="_ValidationScriptsPartial"/>
-<script>
-    $(":input").attr('autocomplete', 'off');
-</script>
-@await RenderSectionAsync("script",false)
+    <script src="/assets/js/yscountdown.min.js"></script>
+    <script src="/assets/js/jquery-ui.min.js"></script>
+    <script src="/assets/js/main.js"></script>
+
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(":input").attr('autocomplete', 'off');
+    </script>
+    @await RenderSectionAsync("script",false)
 
 </body>
 

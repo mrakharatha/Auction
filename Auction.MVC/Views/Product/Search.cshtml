@@ -1,0 +1,32 @@
+﻿@model List<Auction.Domain.Models.Product>
+@{
+    ViewData["Title"] = "نتایج";
+}
+
+
+<div class="hero-section style-2 pb-lg-400">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li>
+                <a asp-controller="Home" asp-action="Index">خانه</a>
+            </li>
+            <li>
+                <span>نتایج</span>
+            </li>
+        </ul>
+    </div>
+    <div class="bg_img hero-bg bottom_center" data-background="/assets/images/banner/hero-bg.png"></div>
+</div>
+
+
+
+
+
+
+<div class="row mb-30-none justify-content-center">
+
+    @foreach (var product in Model)
+    {
+        <partial name="_BoxProduct" model="product" />
+    }
+</div>

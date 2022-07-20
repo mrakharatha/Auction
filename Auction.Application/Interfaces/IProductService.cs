@@ -8,10 +8,12 @@ namespace Auction.Application.Interfaces
     public interface IProductService
     {
         List<Product> GetProducts(int userId);
+        List<Product> GetProducts(int? categoryId,string filter,DateTime dateTime);
         void AddProduct(ProductViewModel model);
         void AddProduct(Product product);
 
         Product GetProduct(int productId);
+        ProductDetailViewModel GetProductDetail(int productId);
         ProductEditViewModel GetProductViewModel(int productId);
         void UpdateProduct(ProductEditViewModel model);
         void UpdateProduct(Product product);

@@ -41,14 +41,14 @@
                                 @foreach (var item in categories)
                                 {
                                     <li>
-                                        <a >@item.CategoryName</a>
+                                        <a asp-controller="Product" asp-action="Search" asp-route-categoryId="@item.CategoryId" >@item.CategoryName</a>
                                     </li>
                                 }
                             </ul>
                         </li>
                     </ul>
-                    <form class="search-form">
-                        <input type="text" placeholder="جستجوی مارک ، مدل ....">
+                    <form class="search-form" asp-controller="Product" asp-action="Search" method="get">
+                        <input type="text" placeholder="جستجوی مارک ، مدل ...." name="filter" id="filter">
                         <button type="submit"><i class="fas fa-search"></i></button>
                     </form>
                     <div class="search-bar d-md-none">
