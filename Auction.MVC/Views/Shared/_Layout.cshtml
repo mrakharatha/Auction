@@ -55,6 +55,9 @@
     <script src="assets/js/jquery-ui.min.js"></script>
 <script src="/assets/js/main.js"></script>
 <partial name="_ValidationScriptsPartial"/>
+<script>
+    $(":input").attr('autocomplete', 'off');
+</script>
 @await RenderSectionAsync("script",false)
 
 </body>
