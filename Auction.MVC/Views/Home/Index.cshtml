@@ -19,7 +19,6 @@
                         <p>
                             حراج آنلاین جایی است که همه با خرید تنوع و قیمت مناسب به خرید ، فروش و دادن کالا می روند.
                         </p>
-                        <a href="#0" class="custom-button yellow btn-large">شروع کنید</a>
                     </div>
                 </div>
                 <div class="d-none d-lg-block col-lg-6">
@@ -54,7 +53,7 @@
                       @foreach (var item in categories)
                       {
                           <a href="#0" class="browse-item">
-                              <img src="/assets/images/auction/@item.Image" alt="auction">
+                              <img src="@item.Image" alt="auction">
                               <span class="info">@item.CategoryName</span>
                           </a>
                       }

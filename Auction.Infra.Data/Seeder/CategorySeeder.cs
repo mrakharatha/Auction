@@ -11,12 +11,10 @@ namespace Auction.Infra.Data.Seeder
         {
             builder.HasData(new List<Category>()
             {
-                new Category(){CategoryId = 1,CategoryName = "خودرو",Image = "01.png"},
-                new Category(){CategoryId = 2,CategoryName = "جواهر سازی",Image = "02.png"},
-                new Category(){CategoryId = 3,CategoryName = "ساعت",Image = "03.png"},
-                new Category(){CategoryId = 4,CategoryName = "الکترونیک",Image = "04.png"},
-                new Category(){CategoryId = 5,CategoryName = "ورزشی",Image = "05.png"},
-                new Category(){CategoryId = 6,CategoryName = "املاک",Image = "06.png"},
+                new Category(){CategoryId = 1,CategoryName = "خودرو",Image = "/assets/images/auction/01.png",Banner = "/assets/images/auction/car/car-bg.png"},
+                new Category(){CategoryId = 2,CategoryName = "جواهر سازی",Image = "/assets/images/auction/02.png",Banner = "/assets/images/auction/jewelry/jwelry-bg.png"},
+                new Category(){CategoryId = 3,CategoryName = "سکه",Image = "/assets/images/auction/07.png",Banner = "/assets/images/auction/coins/coin-bg.png"},
+                new Category(){CategoryId = 4,CategoryName = "املاک",Image = "/assets/images/auction/06.png",Banner = "/assets/images/auction/realstate/real-bg.png"},
             });
         }
     }

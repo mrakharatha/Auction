@@ -9,6 +9,7 @@ namespace Auction.Domain.Models
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
         public string Image { get; set; }
+        public string Banner { get; set; }
 
         #region Relations
 
