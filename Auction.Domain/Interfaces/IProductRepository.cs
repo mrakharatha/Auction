@@ -7,6 +7,12 @@ namespace Auction.Domain.Interfaces
 {
     public interface IProductRepository
     {
+        List<Domain.Models.Auction> GetWinner(int userId);
+        ActivityViewModel GetActivity(int userId);
+        Domain.Models.Auction GetAuction(int auctionId);
+        void UpdateAuction(Domain.Models.Auction auction);
+        void AddOfferHistory(OfferHistory offerHistory);
+        int GetLastOfferHistory(int productId);
         List<Product> GetProducts(int userId);
         List<Product> GetProducts(int? categoryId, string filter,DateTime dateTime);
         ProductDetailViewModel GetProductDetail(int productId);
@@ -24,5 +30,10 @@ namespace Auction.Domain.Interfaces
         List<ProductImage> GetImages(int productId);
         void AddImage(ProductImage image);
         string DeleteImage(int imageId);
+        List<ProductsExpireAuctionViewModel> GetProductsExpireAuction(int userId, DateTime dateTime);
+        void UpdateProductsRange(List<Product> products);
+        void AddAuctionsRange(List<Domain.Models.Auction> auctions);
+        List<Domain.Models.Auction> GetAuctionExpire(int userId);
+
     }
 }

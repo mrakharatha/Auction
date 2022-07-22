@@ -44,6 +44,8 @@ namespace Auction.Domain.Models
         public List<ProductFeature> ProductFeatures { get; set; }
         public List<ProductTag> ProductTags { get; set; }
         public List<ProductImage> ProductImages { get; set; }
+        public List<OfferHistory> OfferHistories { get; set; }
+        public List<Auction> Auctions { get; set; }
         #endregion
     }
 }

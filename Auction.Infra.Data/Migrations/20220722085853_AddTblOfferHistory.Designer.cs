@@ -4,59 +4,22 @@ using Auction.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Auction.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20220722085853_AddTblOfferHistory")]
+    partial class AddTblOfferHistory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Auction.Domain.Models.Auction", b =>
-                {
-                    b.Property<int>("AuctionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BuyerId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("ReceiveStatus")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("SellerId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("ShippingStatus")
-                        .HasColumnType("bit");
-
-                    b.HasKey("AuctionId");
-
-                    b.HasIndex("BuyerId");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("SellerId");
-
-                    b.ToTable("Auctions");
-                });
 
             modelBuilder.Entity("Auction.Domain.Models.Category", b =>
                 {
@@ -359,31 +322,6 @@ namespace Auction.Infra.Data.Migrations
                     b.ToTable("Wallets");
                 });
 
-            modelBuilder.Entity("Auction.Domain.Models.Auction", b =>
-                {
-                    b.HasOne("Auction.Domain.Models.User", "Buyer")
-                        .WithMany("AuctionBuyers")
-                        .HasForeignKey("BuyerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Auction.Domain.Models.Product", null)
-                        .WithMany("Auctions")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Auction.Domain.Models.User", "Seller")
-                        .WithMany("AuctionSellers")
-                        .HasForeignKey("SellerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Buyer");
-
-                    b.Navigation("Seller");
-                });
-
             modelBuilder.Entity("Auction.Domain.Models.OfferHistory", b =>
                 {
                     b.HasOne("Auction.Domain.Models.Product", "Product")
@@ -473,8 +411,6 @@ namespace Auction.Infra.Data.Migrations
 
             modelBuilder.Entity("Auction.Domain.Models.Product", b =>
                 {
-                    b.Navigation("Auctions");
-
                     b.Navigation("OfferHistories");
 
                     b.Navigation("ProductFeatures");
@@ -486,10 +422,6 @@ namespace Auction.Infra.Data.Migrations
 
             modelBuilder.Entity("Auction.Domain.Models.User", b =>
                 {
-                    b.Navigation("AuctionBuyers");
-
-                    b.Navigation("AuctionSellers");
-
                     b.Navigation("OfferHistories");
 
                     b.Navigation("Products");

@@ -14,7 +14,19 @@ namespace Auction.Application.Utilities
         {
             return Convert.ToInt32(value);
         }
+        public static string ToSubstring(this string value, int split)
+        {
+            if (value == null)
+                return value;
 
+            var valueLength = value.Length;
+
+            if (valueLength <= split)
+                return value;
+
+            return value.Substring(0, split) + "...";
+
+        }
         public static string ToNumeric(this int value)
         {
             return value.ToString("N0"); //"123,456"

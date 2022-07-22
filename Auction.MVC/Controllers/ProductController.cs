@@ -1,6 +1,7 @@
 ﻿using System;
 using Auction.Application.Interfaces;
 using Auction.Application.Utilities;
+using Auction.Domain.Models;
 using Auction.Domain.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -38,9 +39,9 @@ namespace Auction.MVC.Controllers
                 return View(model);
             }
 
-            if(!model.File.IsImage())
+            if (!model.File.IsImage())
             {
-                ModelState.AddModelError(nameof(model.File),"لطفا تصویر انتخاب کنید");
+                ModelState.AddModelError(nameof(model.File), "لطفا تصویر انتخاب کنید");
                 GetData();
                 return View(model);
             }
@@ -68,7 +69,7 @@ namespace Auction.MVC.Controllers
                 return View(model);
             }
 
-            if (model.File!=null&&!model.File.IsImage())
+            if (model.File != null && !model.File.IsImage())
             {
                 ModelState.AddModelError(nameof(model.File), "لطفا تصویر انتخاب کنید");
                 GetData();
@@ -79,15 +80,37 @@ namespace Auction.MVC.Controllers
         }
 
 
-        public IActionResult Search(int? categoryId=null,string filter =null)
+        public IActionResult Search(int? categoryId = null, string filter = null)
         {
-            return View(_productService.GetProducts(categoryId,filter,DateTime.Now));
+            return View(_productService.GetProducts(categoryId, filter, DateTime.Now));
         }
 
 
         public IActionResult Detail(int id)
         {
-            return View(_productService.GetProductDetail(id));
+            ViewBag.ProductDetail = _productService.GetProductDetail(id);
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Detail(OfferHistory offerHistory)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.ProductDetail = _productService.GetProductDetail(offerHistory.ProductId);
+                return View(offerHistory);
+            }
+
+            var result = _productService.CheckPrice(offerHistory.ProductId, offerHistory.UserId, offerHistory.Price);
+
+            if (result.IsSucceed)
+            {
+                TempData["Status"] = true;
+                _productService.AddOfferHistory(offerHistory);
+            }
+            else
+                TempData["Result"] = result.Message;
+
+            return RedirectToAction("Detail", new { id = offerHistory.ProductId });
         }
 
         public bool Delete(int id)
@@ -96,5 +119,28 @@ namespace Auction.MVC.Controllers
             return true;
         }
 
+        public IActionResult Auction()
+        {
+            _productService.CalculateAuction(User.GetUserId());
+            return View(_productService.GetAuctionExpire(User.GetUserId()));
+        }
+
+        public IActionResult Winner()
+        {
+            return View(_productService.GetWinner(User.GetUserId()));
+        }
+
+        public IActionResult ShippingStatus(int id)
+        {
+            _productService.UpdateShipping(id);
+
+            return RedirectToAction("Auction", "Product");
+        }
+        public IActionResult ReceiveStatus(int id)
+        {
+            _productService.UpdateReceive(id);
+
+            return RedirectToAction("Winner", "Product");
+        }
     }
 }

@@ -1,0 +1,78 @@
+﻿@using Auction.Domain.Convertors
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<Auction.Domain.Models.Auction>
+@{
+    ViewData["Title"] = "برنده شده ها";
+    int cnt = 1;
+}
+
+<div class="hero-section style-2 pb-lg-400">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li>
+                <a asp-controller="Home" asp-action="Index">خانه</a>
+            </li>
+            <li>
+                <span>برنده شده ها</span>
+            </li>
+        </ul>
+    </div>
+    <div class="bg_img hero-bg bottom_center" data-background="/assets/images/banner/hero-bg.png"></div>
+</div>
+
+<section class="dashboard-section padding-bottom mt--240 mt-lg--325 pos-rel">
+    <div class="container">
+        <div class="row justify-content-center">
+            <partial name="_Dashboard" />
+            <div class="col-lg-8">
+                <div class="dashboard-widget">
+                    <div class="dashboard-purchasing-tabs">
+                        <div class="tab-content">
+                            <div class="tab-pane show active fade">
+                                <table class="purchasing-table">
+                                    <thead>
+                                    <th>ردیف</th>
+                                    <th>نام محصول</th>
+                                    <th>فروشنده</th>
+                                    <th>مبلغ</th>
+                                    <th></th>
+                                    </thead>
+                                    <tbody>
+                                       @foreach (var item in Model)
+                                       {
+                                           <tr id="Product_@(item.ProductId)">
+                                               <td >@cnt</td>
+                                               <td >@item.Product.ProductName</td>
+                                               <td >@item.Seller.FullName</td>
+                                               <td >@item.Price.ToString("#,0 تومان")</td>
+                                               <td>
+                                                   @if (!item.ReceiveStatus)
+                                                   {
+                                                       <a asp-controller="Product" asp-action="ReceiveStatus" asp-route-id="@item.AuctionId" class="mr-2"><i class="fas fa-receipt text-info"></i></a>
+                                                   }
+                                                   else
+                                                   {
+                                                       <p>دریافت از فروشنده</p>
+                                                   }
+                                                   </td>
+                                           </tr>
+                                           cnt++;
+                                       }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section script
+{
+    <script>
+        $("#winner").addClass('active');
+    </script>
+    }

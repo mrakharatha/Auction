@@ -44,8 +44,16 @@ namespace Auction.Domain.Models
         Charge=1,
 
 
+        [Display(Name = "بلوک پول")]
+        Block = 4,
+        
+        [Display(Name = "کمیسیون")]
+        Commission = 5, 
+        
+        [Display(Name = "فروش")]
+        Sale = 6,
 
-        Increase=2,
+        Increase =2,
         Decrease = 3,
     }
 }

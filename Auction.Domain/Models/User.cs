@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Auction.Domain.Models
@@ -36,6 +37,15 @@ namespace Auction.Domain.Models
 
         public List<Wallet> Wallets { get; set; }
         public List<Product> Products { get; set; }
+
+        public List<OfferHistory> OfferHistories { get; set; }
+
+        [InverseProperty(nameof(Auction.Buyer))]
+        public List<Auction> AuctionBuyers { get; set; }
+
+        [InverseProperty(nameof(Auction.Seller))]
+        public List<Auction> AuctionSellers { get; set; }
+
         #endregion
     }
 }

@@ -24,6 +24,8 @@ namespace Auction.Infra.Data.Context
         public DbSet<ProductFeature> ProductFeatures { get; set; }
         public DbSet<ProductTag> ProductTags { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
+        public DbSet<OfferHistory> OfferHistories { get; set; }
+        public DbSet<Domain.Models.Auction> Auctions { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var cascadeFKs = modelBuilder.Model.GetEntityTypes()

@@ -29,19 +29,13 @@
                                 <a id="wallet" asp-controller="Wallet"asp-action="Index"><i class="flaticon-money"></i>کیف پول</a>
                             </li>
                             <li>
-                                <a href="winning-bids.html"><i class="flaticon-best-seller"></i>پیشنهادات برنده</a>
+                                <a asp-controller="Product" asp-action="Winner" id="winner"><i class="flaticon-best-seller"></i> برنده شده ها</a>
                             </li>
                             <li>
-                                <a href="notifications.html"><i class="flaticon-alarm"></i>هشدارهای من </a>
+                                <a asp-controller="Product" asp-action="Auction" id="auction"><i class="flaticon-shake-hand"></i>حراجی ها</a>
                             </li>
                             <li>
-                                <a href="my-favorites.html"><i class="flaticon-star"></i>علایق من</a>
-                            </li>
-                            <li>
-                                <a href="referral.html"><i class="flaticon-shake-hand"></i>مراجعات</a>
-                            </li>
-                            <li>
-                                <a asp-controller="Product" asp-action="Index" id="product"><i class="flaticon-bag"></i>حراج</a>
+                                <a asp-controller="Product" asp-action="Index" id="product"><i class="flaticon-bag"></i>محصولات</a>
                             </li>
                             @if (User.GetUserId() == 1)
                             {

@@ -55,5 +55,19 @@ namespace Auction.Application.Services
         {
             _walletRepository.UpdateWallet(wallet);
         }
+
+        public void UpdateWallet(WalletType walletType, WalletType type, int userId, int amount, string description)
+        {
+            Wallet wallet = new Wallet()
+            {
+                Amount = amount,
+                Description = description,
+                IsPay = true,
+                Type = type,
+                WalletType = walletType,
+                UserId = userId,
+            };
+            AddWallet(wallet);
+        }
     }
 }

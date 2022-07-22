@@ -1,6 +1,15 @@
-﻿@model Auction.Domain.ViewModels.ProductDetailViewModel
+﻿@using Auction.Application.Interfaces
+@using Auction.Application.Utilities
+@using Auction.Domain.Convertors
+@using Auction.Domain.ViewModels
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Auction.Domain.Models.OfferHistory
+@inject ISettingService SettingService;
 @{
-    ViewData["Title"] = Model.ProductName;
+   var setting= SettingService.GetSetting();
+    var detail = ViewBag.ProductDetail as ProductDetailViewModel?? new ProductDetailViewModel();
+    ViewData["Title"] = detail.ProductName;
+
 }
 
 
@@ -11,7 +20,7 @@
                 <a asp-controller="Home" asp-action="Index">خانه</a>
             </li>
             <li>
-                <span>@Model.ProductName</span>
+                <span>@detail.ProductName</span>
             </li>
         </ul>
     </div>
@@ -20,322 +29,292 @@
 
 
 
-    <section class="product-details padding-bottom mt--240 mt-lg--440">
-        <div class="container">
-            <div class="product-details-slider-top-wrapper">
-                <div class="product-details-slider owl-theme owl-carousel" id="sync1">
-                    <div class="slide-top-item">
-                            <div class="slide-inner">
-                                <img src="@Model.ProductImage" alt="product">
-                            </div>
-                        </div>
-                </div>
-            </div>
-            <div class="product-details-slider-wrapper">
-                <div class="product-bottom-slider owl-theme owl-carousel" id="sync2">
-                    @foreach (var item in Model.ProductImages)
-                    {
-                        <div class="slide-bottom-item">
-                            <div class="slide-inner">
-                                <img src="@item.ProductImageName" alt="product">
-                            </div>
-                        </div>
-                    }
-
-                </div>
-                <span class="det-prev det-nav">
-                    <i class="fas fa-angle-right"></i>
-                </span>
-                <span class="det-next det-nav active">
-                    <i class="fas fa-angle-left"></i>
-                </span>
-            </div>
-            <div class="row mt-40-60-80">
-                <div class="col-lg-8">
-                    <div class="product-details-content">
-                        <div class="product-details-header">
-                            <h2 class="title">@Model.FullName</h2>
-                        </div>
-                        <ul class="price-table mb-30">
-                            <li class="header">
-                                <h5 class="current">قیمت فعلی</h5>
-                                <h3 class="price">@Model.Price.ToString("#,0") تومان</h3>
-                            </li>
-                            <li>
-                                <span class="details">@Model.FullName</span>
-                                <h5 class="info">10.00%</h5>
-                            </li>
-                            <li>
-                                <span class="details">افزایش قیمت</span>
-                                <h5 class="info">50.000 تومان</h5>
-                            </li>
-                        </ul>
-                        <div class="product-bid-area">
-                            <form class="product-bid-form">
-                                <div class="search-icon">
-                                    <img src="/assets/images/product/search-icon.png" alt="product">
-                                </div>
-                                <input type="text" placeholder="مبلغ پیشنهاد خود را وارد کنید">
-                                <button type="submit" class="custom-button">پیشنهاد دهید</button>
-                            </form>
-                        </div>
-                        <div class="buy-now-area">
-                            <a href="#0" class="custom-button">اکنون بخرید: 4200 تومان</a>
-                            <a href="#0" class="rating custom-button active border"><i class="fas fa-star"></i> افزودن به علاقه مندی</a>
-                            <div class="share-area">
-                                <span>اشتراک:</span>
-                                <ul>
-                                    <li>
-                                        <a href="#0"><i class="fab fa-facebook-f"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#0"><i class="fab fa-twitter"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#0"><i class="fab fa-linkedin-in"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#0"><i class="fab fa-instagram"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="product-sidebar-area">
-                        <div class="product-single-sidebar mb-3">
-                            <h6 class="title">این حراج به پایان می رسد:</h6>
-                            <div class="countdown">
-                                <div id="bid_counter1"></div>
-                            </div>
-                            <div class="side-counter-area">
-                                <div class="side-counter-item">
-                                    <div class="thumb">
-                                        <img src="/assets/images/product/icon1.png" alt="product">
-                                    </div>
-                                    <div class="content">
-                                        <h3 class="count-title"><span class="counter">61</span></h3>
-                                        <p>پیشنهاد دهندگان فعال</p>
-                                    </div>
-                                </div>
-                                <div class="side-counter-item">
-                                    <div class="thumb">
-                                        <img src="/assets/images/product/icon2.png" alt="product">
-                                    </div>
-                                    <div class="content">
-                                        <h3 class="count-title"><span class="counter">203</span></h3>
-                                        <p>تماشا کردن</p>
-                                    </div>
-                                </div>
-                                <div class="side-counter-item">
-                                    <div class="thumb">
-                                        <img src="/assets/images/product/icon3.png" alt="product">
-                                    </div>
-                                    <div class="content">
-                                        <h3 class="count-title"><span class="counter">82</span></h3>
-                                        <p>کل پیشنهاد</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#0" class="cart-link">سیاست های حمل و نقل ، پرداخت و حراج را مشاهده کنید</a>
-                    </div>
+<section class="product-details padding-bottom mt--240 mt-lg--440">
+<div class="container">
+    <div class="product-details-slider-top-wrapper">
+        <div class="product-details-slider owl-theme owl-carousel" id="sync1">
+            <div class="slide-top-item">
+                <div class="slide-inner">
+                    <img src="@detail.ProductImage" alt="product">
                 </div>
             </div>
         </div>
-        <div class="product-tab-menu-area mb-40-60 mt-70-100">
-            <div class="container">
-                <ul class="product-tab-menu nav nav-tabs">
-                    <li>
-                        <a href="#details" class="active" data-toggle="tab">
-                            <div class="thumb">
-                                <img src="/assets/images/product/tab1.png" alt="product">
-                            </div>
-                            <div class="content">شرح</div>
-                        </a>
+    </div>
+    <div class="product-details-slider-wrapper">
+        <div class="product-bottom-slider owl-theme owl-carousel" id="sync2">
+            @foreach (var item in detail.ProductImages)
+            {
+                <div class="slide-bottom-item">
+                    <div class="slide-inner">
+                        <img src="@item.ProductImageName" alt="product">
+                    </div>
+                </div>
+            }
+
+        </div>
+        <span class="det-prev det-nav">
+            <i class="fas fa-angle-right"></i>
+        </span>
+        <span class="det-next det-nav active">
+            <i class="fas fa-angle-left"></i>
+        </span>
+    </div>
+    <div class="row mt-40-60-80">
+        <div class="col-lg-8">
+            <div class="product-details-content">
+                <div class="product-details-header">
+                    <h2 class="title">@detail.FullName</h2>
+                </div>
+                <ul class="price-table mb-30">
+                    <li class="header">
+                        <h5 class="current">قیمت فعلی</h5>
+                        <h3 class="price">@detail.Price.ToString("#,0") تومان</h3>
                     </li>
                     <li>
-                        <a href="#delevery" data-toggle="tab">
-                            <div class="thumb">
-                                <img src="/assets/images/product/tab2.png" alt="product">
-                            </div>
-                            <div class="content">گزینه های تحویل</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#history" data-toggle="tab">
-                            <div class="thumb">
-                                <img src="/assets/images/product/tab3.png" alt="product">
-                            </div>
-                            <div class="content">تاریخ پیشنهادات (36)</div>
-                        </a>
+                        <span class="details">پله رشد</span>
+                        <h5 class="info">% @setting.GrowthLadder </h5>
                     </li>
                 </ul>
+                @if (detail.UserId != User.GetUserId())
+                {
+                    <div class="product-bid-area">
+                        <form method="post" class="product-bid-form">
+                            <div class="search-icon">
+                                <img src="/assets/images/product/search-icon.png" alt="product">
+                            </div>
+                            <input type="hidden" asp-for="UserId" value="@User.GetUserId()"/>
+                            <input type="hidden" asp-for="ProductId" value="@detail.ProductId"/>
+                            <input type="number" asp-for="Price" placeholder="مبلغ پیشنهاد خود را وارد کنید">
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                            <button type="submit" class="custom-button">پیشنهاد دهید</button>
+                        </form>
+                    </div>
+                }
+                @if (TempData["Result"] != null)
+                {
+                 var result=   TempData["Result"] as string;
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        @result
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span style="position: absolute; right: 30px; top: 30%;"
+                                  aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                }
+                
+                @if (TempData["Status"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        پیشنهاد با موفقیت ثبت شد
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span style="position: absolute; right: 30px; top: 30%;"
+                                  aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                }
+        
             </div>
         </div>
-        <div class="container">
-            <div class="tab-content">
-                <div class="tab-pane fade show active" id="details">
-                    <div class="tab-details-content">
-                        <div class="header-area">
-                            <h3 class="title">نسیم زودیاک نهم</h3>
-                            <div class="item">
-                                <table class="product-info-table">
-                                    <tbody>
-                                    @foreach (var item in Model.ProductFeatures)
-                                    {
-                                        <tr>
-                                            <th>@item.FeatureName</th>
-                                            <td>@item.FeatureValue</td>
-                                        </tr>
-                                    }
-
-                                    </tbody>
-                                </table>
-                            </div>
-                            
-                            <div class="item">
-                                <h5 class="subtitle">توضیحات</h5>
-                                <p>@Html.Raw(Model.Description)</p>
-                           </div>
-                        </div>
+        <div class="col-lg-4">
+            <div class="product-sidebar-area">
+                <div class="product-single-sidebar mb-3">
+                    <h6 class="title">این حراج به پایان می رسد:</h6>
+                    <div class="countdown">
+                        <div id="bid_counter1"></div>
                     </div>
-                </div>
-                <div class="tab-pane fade show" id="delevery">
-                    <div class="shipping-wrapper">
-                        <div class="item">
-                            <h5 class="title">حمل</h5>
-                            <div class="table-wrapper">
-                                <table class="shipping-table">
-                                    <thead>
-                                        <tr>
-                                            <th>روش های موجود تحویل	 </th>
-                                            <th>قیمت</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>تحویل مشتری (ظرف 10 روز)	</td>
-                                            <td>0 تومان</td>
-                                        </tr>
-                                        <tr>
-                                            <td>حمل و نقل استاندارد (5-7 روز کاری)	</td>
-                                            <td>قابل اجرا نیست</td>
-                                        </tr>
-                                        <tr>
-                                            <td>حمل و نقل سریع (2-4 روز کاری)	</td>
-                                            <td>قابل اجرا نیست</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                    <div class="side-counter-area">
+                        <div class="side-counter-item">
+                            <div class="thumb">
+                                <img src="/assets/images/product/icon1.png" alt="product">
+                            </div>
+                            <div class="content">
+                                <h3 class="count-title"><span class="counter">@detail.ActiveBidders</span></h3>
+                                <p>پیشنهاد دهندگان فعال</p>
                             </div>
                         </div>
-                        <div class="item">
-                            <h5 class="title">یادداشت</h5>
-                            <p>لطفاً قبل از تعهد به پیشنهاد ، سیاست حمل و نقل و بازگشت ما را به دقت بررسی کنید. هر از گاهی و با صلاحدید خود ،  ممکن است ساختار هزینه غالب برای حمل و نقل و حمل و نقل را تغییر دهد.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane fade show" id="history">
-                    <div class="history-wrapper">
-                        <div class="item">
-                            <h5 class="title">تاریخچه پیشنهادات</h5>
-                            <div class="history-table-area">
-                                <table class="history-table">
-                                    <thead>
-                                        <tr>
-                                            <th>پیشنهاد دهنده</th>
-                                            <th>تاریخ</th>
-                                            <th>زمان</th>
-                                            <th>قیمت واحد</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td data-history="bidder">
-                                                <div class="user-info">
-                                                    <div class="thumb">
-                                                        <img src="/assets/images/history/01.png" alt="history">
-                                                    </div>
-                                                    <div class="content">
-                                                        مارسیا کلارک
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td data-history="date">1399/07/03</td>
-                                            <td data-history="time">02:45 بعداز ظهر</td>
-                                            <td data-history="unit price">90.000 تومان</td>
-                                        </tr>
-                                        <tr>
-                                            <td data-history="bidder">
-                                                <div class="user-info">
-                                                    <div class="thumb">
-                                                        <img src="/assets/images/history/02.png" alt="history">
-                                                    </div>
-                                                    <div class="content">
-                                                       مارسیا کلارک
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td data-history="date">1399/07/03</td>
-                                            <td data-history="time">02:45 بعداز ظهر</td>
-                                            <td data-history="unit price">90.000 تومان</td>
-                                        </tr>
-                                        <tr>
-                                            <td data-history="bidder">
-                                                <div class="user-info">
-                                                    <div class="thumb">
-                                                        <img src="/assets/images/history/03.png" alt="history">
-                                                    </div>
-                                                    <div class="content">
-                                                       مارسیا کلارک
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td data-history="date">1399/07/03</td>
-                                            <td data-history="time">02:45 بعداز ظهر</td>
-                                            <td data-history="unit price">90.000 تومان</td>
-                                        </tr>
-                                        <tr>
-                                            <td data-history="bidder">
-                                                <div class="user-info">
-                                                    <div class="thumb">
-                                                        <img src="/assets/images/history/04.png" alt="history">
-                                                    </div>
-                                                    <div class="content">
-                                                        مارسیا کلارک
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td data-history="date">1399/07/03</td>
-                                            <td data-history="time">02:45 بعداز ظهر</td>
-                                            <td data-history="unit price">90.000 تومان</td>
-                                        </tr>
-                                        <tr>
-                                            <td data-history="bidder">
-                                                <div class="user-info">
-                                                    <div class="thumb">
-                                                        <img src="/assets/images/history/05.png" alt="history">
-                                                    </div>
-                                                    <div class="content">
-                                                        مارسیا کلارک
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td data-history="date">1399/07/03</td>
-                                            <td data-history="time">02:45 بعداز ظهر</td>
-                                            <td data-history="unit price">90.000 تومان</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <div class="text-center mb-3 mt-4">
-                                    <a href="#0" class="button-3">بارگذاری بیشتر</a>
-                                </div>
+                        <div class="side-counter-item">
+                            <div class="thumb">
+                                <img src="/assets/images/product/icon3.png" alt="product">
+                            </div>
+                            <div class="content">
+                                <h3 class="count-title"><span class="counter">@detail.WholeOffer</span></h3>
+                                <p>کل پیشنهاد</p>
                             </div>
                         </div>
                     </div>
-                </div>
                 </div>
             </div>
-    </section>
+        </div>
+    </div>
+</div>
+<div class="product-tab-menu-area mb-40-60 mt-70-100">
+    <div class="container">
+        <ul class="product-tab-menu nav nav-tabs">
+            <li>
+                <a href="#details" class="active" data-toggle="tab">
+                    <div class="thumb">
+                        <img src="/assets/images/product/tab1.png" alt="product">
+                    </div>
+                    <div class="content">شرح</div>
+                </a>
+            </li>
+            <li>
+                <a href="#delevery" data-toggle="tab">
+                    <div class="thumb">
+                        <img src="/assets/images/product/tab2.png" alt="product">
+                    </div>
+                    <div class="content">گزینه های تحویل</div>
+                </a>
+            </li>
+            <li>
+                <a href="#history" data-toggle="tab">
+                    <div class="thumb">
+                        <img src="/assets/images/product/tab3.png" alt="product">
+                    </div>
+                    <div class="content">تاریخ پیشنهادات (@detail.WholeOffer)</div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="container">
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="details">
+            <div class="tab-details-content">
+                <div class="header-area">
+                    <h3 class="title">@detail.ProductName</h3>
+                    <div class="item">
+                        <table class="product-info-table">
+                            <tbody>
+                            @foreach (var item in detail.ProductFeatures)
+                            {
+                                <tr>
+                                    <th>@item.FeatureName</th>
+                                    <td>@item.FeatureValue</td>
+                                </tr>
+                            }
+
+                            </tbody>
+                        </table>
+                    </div>
+                            
+                    <div class="item">
+                        <h5 class="subtitle">توضیحات</h5>
+                        <p>@Html.Raw(detail.Description)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade show" id="delevery">
+            <div class="shipping-wrapper">
+                <div class="item">
+                    <h5 class="title">حمل</h5>
+                    <div class="table-wrapper">
+                        <table class="shipping-table">
+                            <thead>
+                            <tr>
+                                <th>روش های موجود تحویل	 </th>
+                                <th>قیمت</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>تحویل مشتری (ظرف 10 روز)	</td>
+                                <td>0 تومان</td>
+                            </tr>
+                            <tr>
+                                <td>حمل و نقل استاندارد (5-7 روز کاری)	</td>
+                                <td>قابل اجرا نیست</td>
+                            </tr>
+                            <tr>
+                                <td>حمل و نقل سریع (2-4 روز کاری)	</td>
+                                <td>قابل اجرا نیست</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="item">
+                    <h5 class="title">یادداشت</h5>
+                    <p>لطفاً قبل از تعهد به پیشنهاد ، سیاست حمل و نقل و بازگشت ما را به دقت بررسی کنید. هر از گاهی و با صلاحدید خود ،  ممکن است ساختار هزینه غالب برای حمل و نقل و حمل و نقل را تغییر دهد.</p>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade show" id="history">
+            <div class="history-wrapper">
+                <div class="item">
+                    <h5 class="title">تاریخچه پیشنهادات</h5>
+                    <div class="history-table-area">
+                        <table class="history-table">
+                            <thead>
+                            <tr>
+                                <th>پیشنهاد دهنده</th>
+                                <th>تاریخ</th>
+                                <th>زمان</th>
+                                <th>قیمت واحد</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var item in detail.OfferHistories)
+                            {
+                                <tr>
+                                    <td data-history="bidder">
+                                        <div class="user-info">
+                                            <div class="thumb">
+                                                <img src="/assets/images/client/@item.User.Avatar" alt="history">
+                                            </div>
+                                            <div class="content">
+                                                @item.User.FullName.ToSubstring(10)
+                                                </div>
+                                        </div>
+                                    </td>
+                                    <td data-history="date">@item.CreateDate.ToShamsi()</td>
+                                    <td data-history="time">@item.CreateDate.ToString("HH:mm:ss")</td>
+                                    <td data-history="unit price">@item.Price.ToString("#,0") تومان</td>
+                                </tr>
+
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+                                
+                                
+                                @section script
+                                {
+                                    <script>
+                                        $(document).ready(function() {
+                                            //Bidding All Events Here
+                                            //New Countdown Starts
+                                            if ($("#bid_counter1").length) {
+                                                // If you need specific date then comment out 1 and comment in 2
+                                                // let endDate = "2020/03/20"; //This is 1
+                                                let endDate = '@detail.EndDate'; //This is 2
+                                                console.log(endDate);
+                                                let counterElement = document.querySelector("#bid_counter1");
+                                                let myCountDown = new ysCountDown(endDate,
+                                                    function(remaining, finished) {
+                                                        let message = "";
+                                                        if (finished) {
+                                                            message = "Expired";
+                                                        } else {
+                                                            var re_days = remaining.totalDays;
+                                                            var re_hours = remaining.hours;
+
+                                                            message += re_days + "روز  : ";
+                                                            message += re_hours + "ساعت  : ";
+                                                            message += remaining.minutes + "دقیقه  : ";
+                                                            message += remaining.seconds + "ثانیه";
+                                                        }
+                                                        counterElement.textContent = message;
+                                                    });
+                                            }
+                                        });
+                                    </script>
+                                }

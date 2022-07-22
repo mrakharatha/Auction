@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Auction.Application.Interfaces;
 using Auction.Application.Utilities;
 using Auction.Domain.Convertors;
@@ -12,10 +13,18 @@ namespace Auction.Application.Services
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
-
-        public ProductService(IProductRepository productRepository)
+        private readonly ISettingService _settingService;
+        private readonly IWalletService _walletService;
+        public ProductService(IProductRepository productRepository, ISettingService settingService, IWalletService walletService)
         {
             _productRepository = productRepository;
+            _settingService = settingService;
+            _walletService = walletService;
+        }
+
+        public ActivityViewModel GetActivity(int userId)
+        {
+            return _productRepository.GetActivity(userId);
         }
 
         public List<Product> GetProducts(int userId)
@@ -23,9 +32,9 @@ namespace Auction.Application.Services
             return _productRepository.GetProducts(userId);
         }
 
-        public List<Product> GetProducts(int? categoryId, string filter,DateTime dateTime)
+        public List<Product> GetProducts(int? categoryId, string filter, DateTime dateTime)
         {
-            return _productRepository.GetProducts(categoryId, filter,dateTime);
+            return _productRepository.GetProducts(categoryId, filter, dateTime);
         }
 
         public void AddProduct(ProductViewModel model)
@@ -156,8 +165,141 @@ namespace Auction.Application.Services
 
         public void DeleteImage(int imageId)
         {
-            var imageName=_productRepository.DeleteImage(imageId);
+            var imageName = _productRepository.DeleteImage(imageId);
             FileUploader.DeleteFile(imageName);
+        }
+
+        public int GetLastOfferHistory(int productId)
+        {
+            return _productRepository.GetLastOfferHistory(productId);
+        }
+
+        public OperationResult CheckPrice(int productId, int userId, int offeredPrice)
+        {
+            var balanceUserWallet = _walletService.BalanceUserWallet(userId);
+
+            if (offeredPrice > balanceUserWallet)
+                return new OperationResult() { IsSucceed = false, Message = "موجودی کیف پول شما کافی نمی باشد" };
+
+
+            var price = GetLastOfferHistory(productId);
+
+            if (price == 0)
+                price = GetProduct(productId).Price;
+
+
+            var growthLadder = _settingService.GetSetting().GrowthLadder;
+
+            var minimumMoney = (price * growthLadder / 100) + price;
+
+
+            if (offeredPrice < minimumMoney)
+                return new OperationResult() { IsSucceed = false, Message = $"حداقل مبلغ پیشنهادی {minimumMoney:#,0} تومان می باشد" };
+
+            return new OperationResult() { IsSucceed = true };
+        }
+
+        public void AddOfferHistory(OfferHistory offerHistory)
+        {
+            _productRepository.AddOfferHistory(offerHistory);
+        }
+
+        public void CalculateAuction(int userId)
+        {
+            var productsExpireAuctions = GetProductsExpireAuction(userId, DateTime.Now);
+            var auctions = new List<Domain.Models.Auction>();
+
+            foreach (var item in productsExpireAuctions)
+            {
+                if (item.OfferHistory == null)
+                    break;
+
+                var product = item.Product;
+                var offerHistory = item.OfferHistory;
+
+                _walletService.UpdateWallet(WalletType.Block,WalletType.Decrease, offerHistory.UserId, offerHistory.Price, $"برنده  مزایده محصول : {product.ProductName}");
+
+                Domain.Models.Auction auction = new Domain.Models.Auction()
+                {
+                    ProductId = product.ProductId,
+                    Price = offerHistory.Price,
+                    ReceiveStatus = false,
+                    ShippingStatus = false,
+                    BuyerId = offerHistory.UserId,
+                    SellerId = product.ProductId,
+                };
+
+                auctions.Add(auction);
+
+            }
+
+            var products = productsExpireAuctions.Select(x => x.Product).ToList();
+            products.ForEach(x => x.IsFinish = true);
+            UpdateProductsRange(products);
+            AddAuctionsRange(auctions);
+        }
+
+        public List<ProductsExpireAuctionViewModel> GetProductsExpireAuction(int userId, DateTime dateTime)
+        {
+            return _productRepository.GetProductsExpireAuction(userId, dateTime);
+        }
+
+        public void UpdateProductsRange(List<Product> products)
+        {
+            _productRepository.UpdateProductsRange(products);
+        }
+
+        public void AddAuctionsRange(List<Domain.Models.Auction> auctions)
+        {
+            _productRepository.AddAuctionsRange(auctions);
+        }
+
+        public List<Domain.Models.Auction> GetAuctionExpire(int userId)
+        {
+            return _productRepository.GetAuctionExpire(userId);
+        }
+
+        public void UpdateShipping(int auctionId)
+        {
+            var auction = GetAuction(auctionId);
+
+            auction.ShippingStatus = true;
+
+            UpdateAuction(auction);
+        }
+
+        public Domain.Models.Auction GetAuction(int auctionId)
+        {
+            return _productRepository.GetAuction(auctionId);
+        }
+
+        public void UpdateAuction(Domain.Models.Auction auction)
+        {
+            _productRepository.UpdateAuction(auction);
+        }
+
+        public List<Domain.Models.Auction> GetWinner(int userId)
+        {
+            return _productRepository.GetWinner(userId);
+        }
+
+        public void UpdateReceive(int auctionId)
+        {
+            var auction = GetAuction(auctionId);
+
+            auction.ReceiveStatus = true;
+
+            var commissionPercentage = _settingService.GetSetting().CommissionPercentage;
+
+            var commission = auction.Price * commissionPercentage / 100;
+
+            _walletService.UpdateWallet(WalletType.Commission,WalletType.Increase, 1, commission, "کمیسیون  مزایده");
+
+            var leftOver = auction.Price - commission;
+
+            _walletService.UpdateWallet(WalletType.Sale,WalletType.Increase, auction.SellerId, leftOver, "فروش محصول");
+
+            UpdateAuction(auction);
         }
     }
 }

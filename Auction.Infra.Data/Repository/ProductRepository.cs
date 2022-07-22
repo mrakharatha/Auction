@@ -19,18 +19,65 @@ namespace Auction.Infra.Data.Repository
             _context = context;
         }
 
+        public List<Domain.Models.Auction> GetWinner(int userId)
+        {
+            return _context.Auctions
+                .Include(x => x.Product)
+                .Include(x => x.Seller)
+                .Where(x => x.BuyerId == userId)
+                .OrderByDescending(x => x.CreateDate)
+                .ToList();
+        }
+
+        public ActivityViewModel GetActivity(int userId)
+        {
+            var activeOffers = _context.OfferHistories.Where(x=> x.UserId.Equals(userId)).Select(x=> x.UserId).Distinct().Count();
+            var winningItems = _context.Auctions.Count(x => x.BuyerId.Equals(userId));
+            var auctionItems = _context.Auctions.Count(x => x.SellerId.Equals(userId));
+            return new ActivityViewModel()
+            {
+                ActiveOffers = activeOffers,
+                AuctionItems = auctionItems,
+                WinningItems = winningItems
+            };
+        }
+
+        public Domain.Models.Auction GetAuction(int auctionId)
+        {
+            return _context.Auctions.Find(auctionId);
+        }
+
+        public void UpdateAuction(Domain.Models.Auction auction)
+        {
+            _context.Update(auction);
+            _context.SaveChanges();
+        }
+
+        public void AddOfferHistory(OfferHistory offerHistory)
+        {
+            _context.Add(offerHistory);
+            _context.SaveChanges();
+        }
+
+        public int GetLastOfferHistory(int productId)
+        {
+            return _context.OfferHistories
+                .OrderByDescending(x => x.CreateDate)
+                .FirstOrDefault(x => x.ProductId == productId)?.Price ?? 0;
+        }
+
         public List<Product> GetProducts(int userId)
         {
             return _context.Products
                 .Where(x =>
-                    x.UserId == userId&&
+                    x.UserId == userId &&
                     !x.IsFinish)
-                .Include(x=> x.Category)
+                .Include(x => x.Category)
                 .OrderBy(x => x.ProductId)
                 .ToList();
         }
 
-        public List<Product> GetProducts(int? categoryId, string filter,DateTime dateTime)
+        public List<Product> GetProducts(int? categoryId, string filter, DateTime dateTime)
         {
             IQueryable<Product> query = _context.Products.Where(x => !x.IsFinish && x.StartDate <= dateTime && x.EndDate >= dateTime);
 
@@ -48,10 +95,12 @@ namespace Auction.Infra.Data.Repository
         {
             return _context.Products
                 .Where(x => x.ProductId == productId)
-                .Include(x=> x.User)
-                .Include(x=> x.ProductFeatures)
-                .Include(x=> x.ProductImages)
-                .Select(x=> new ProductDetailViewModel()
+                .Include(x => x.User)
+                .Include(x => x.ProductFeatures)
+                .Include(x => x.ProductImages)
+                .Include(x => x.OfferHistories)
+                .ThenInclude(x => x.User)
+                .Select(x => new ProductDetailViewModel()
                 {
                     ProductId = x.ProductId,
                     ProductName = x.ProductName,
@@ -60,7 +109,12 @@ namespace Auction.Infra.Data.Repository
                     Description = x.Description,
                     ProductFeatures = x.ProductFeatures,
                     ProductImages = x.ProductImages,
-                    ProductImage = x.Image
+                    ProductImage = x.Image,
+                    UserId = x.UserId,
+                    EndDate = x.EndDate.ToString("yyyy/MM/dd hh:mm:ss tt"),
+                    OfferHistories = x.OfferHistories,
+                    ActiveBidders = x.OfferHistories.Select(o => o.UserId).Distinct().Count(),
+                    WholeOffer = x.OfferHistories.Count,
                 })
                 .SingleOrDefault();
         }
@@ -78,22 +132,22 @@ namespace Auction.Infra.Data.Repository
 
         public ProductEditViewModel GetProductViewModel(int productId)
         {
-           return _context.Products
-                .Where(x => x.ProductId == productId)
-                .Select(x => new ProductEditViewModel()
-                {
-                    EndDate = x.EndDate.ToShamsi(),
-                    StartDate = x.StartDate.ToShamsi(),
-                    CategoryId = x.CategoryId,
-                    Description = x.Description,
-                    EndTime = x.EndDate.ToString("HH:mm"),
-                    StartTime = x.StartDate.ToString("HH:mm"),
-                    Price = x.Price,
-                    ProductId = x.ProductId,
-                    ProductName = x.ProductName,
-                    UserId = x.UserId
-                })
-                .SingleOrDefault();
+            return _context.Products
+                 .Where(x => x.ProductId == productId)
+                 .Select(x => new ProductEditViewModel()
+                 {
+                     EndDate = x.EndDate.ToShamsi(),
+                     StartDate = x.StartDate.ToShamsi(),
+                     CategoryId = x.CategoryId,
+                     Description = x.Description,
+                     EndTime = x.EndDate.ToString("HH:mm"),
+                     StartTime = x.StartDate.ToString("HH:mm"),
+                     Price = x.Price,
+                     ProductId = x.ProductId,
+                     ProductName = x.ProductName,
+                     UserId = x.UserId
+                 })
+                 .SingleOrDefault();
         }
 
         public void UpdateProduct(Product product)
@@ -104,17 +158,17 @@ namespace Auction.Infra.Data.Repository
 
         public List<AuctionViewModel> GetAuction(DateTime dateTime)
         {
-          return  _context.Products
-                .Include(x => x.Category)
-                .Where(x => !x.IsFinish && x.StartDate <= dateTime && x.EndDate >= dateTime)
-                .ToList()
-                .GroupBy(
-                    p => p.CategoryId,
-                    (key, g) => new AuctionViewModel
-                    {
-                        Products = g.OrderByDescending(x => x.StartDate).Take(3).ToList(),
-                        Category = g.FirstOrDefault().Category
-                    }).ToList();
+            return _context.Products
+                  .Include(x => x.Category)
+                  .Where(x => !x.IsFinish && x.StartDate <= dateTime && x.EndDate >= dateTime)
+                  .ToList()
+                  .GroupBy(
+                      p => p.CategoryId,
+                      (key, g) => new AuctionViewModel
+                      {
+                          Products = g.OrderByDescending(x => x.StartDate).Take(3).ToList(),
+                          Category = g.FirstOrDefault().Category
+                      }).ToList();
         }
 
         public List<ProductFeature> GetFeatures(int productId)
@@ -170,6 +224,41 @@ namespace Auction.Infra.Data.Repository
             _context.Remove(productImage);
             _context.SaveChanges();
             return productImage.ProductImageName;
+        }
+
+        public List<ProductsExpireAuctionViewModel> GetProductsExpireAuction(int userId, DateTime dateTime)
+        {
+            return _context.Products
+                .Include(x => x.OfferHistories)
+                .Where(x => !x.IsFinish && x.UserId.Equals(userId) && x.EndDate <= dateTime)
+                .Select(x => new ProductsExpireAuctionViewModel()
+                {
+                    Product = x,
+                    OfferHistory = x.OfferHistories.OrderByDescending(o => o.CreateDate).FirstOrDefault()
+                })
+                .ToList();
+        }
+
+        public void UpdateProductsRange(List<Product> products)
+        {
+            _context.UpdateRange(products);
+            _context.SaveChanges();
+        }
+
+        public void AddAuctionsRange(List<Domain.Models.Auction> auctions)
+        {
+            _context.AddRange(auctions);
+            _context.SaveChanges();
+        }
+
+        public List<Domain.Models.Auction> GetAuctionExpire(int userId)
+        {
+            return _context.Auctions
+                .Include(x => x.Product)
+                .Include(x => x.Buyer)
+                .Where(x => x.SellerId == userId)
+                .OrderByDescending(x => x.CreateDate)
+                .ToList();
         }
     }
 }

@@ -11,5 +11,6 @@ namespace Auction.Application.Interfaces
         int ChargeWallet(int userId, int amount, string description);
         Wallet GetWalletByWalletId(int walletId);
         void UpdateWallet(Wallet wallet);
+        void UpdateWallet(WalletType walletType,WalletType type,int userId,int amount,string description);
     }
 }
