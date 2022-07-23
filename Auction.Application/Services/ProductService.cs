@@ -226,7 +226,7 @@ namespace Auction.Application.Services
                     ReceiveStatus = false,
                     ShippingStatus = false,
                     BuyerId = offerHistory.UserId,
-                    SellerId = product.ProductId,
+                    SellerId = product.UserId,
                 };
 
                 auctions.Add(auction);

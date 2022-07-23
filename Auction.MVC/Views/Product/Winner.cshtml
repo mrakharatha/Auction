@@ -46,15 +46,18 @@
                                                <td >@item.Seller.FullName</td>
                                                <td >@item.Price.ToString("#,0 تومان")</td>
                                                <td>
-                                                   @if (!item.ReceiveStatus)
+                                                   @if (item.ShippingStatus)
                                                    {
-                                                       <a asp-controller="Product" asp-action="ReceiveStatus" asp-route-id="@item.AuctionId" class="mr-2"><i class="fas fa-receipt text-info"></i></a>
+                                                       @if (!item.ReceiveStatus)
+                                                       {
+                                                           <a asp-controller="Product" asp-action="ReceiveStatus" asp-route-id="@item.AuctionId" class="mr-2"><i class="fas fa-receipt text-info"></i></a>
+                                                       }
+                                                       else
+                                                       {
+                                                           <p>دریافت از فروشنده</p>
+                                                       }
                                                    }
-                                                   else
-                                                   {
-                                                       <p>دریافت از فروشنده</p>
-                                                   }
-                                                   </td>
+                                               </td>
                                            </tr>
                                            cnt++;
                                        }
