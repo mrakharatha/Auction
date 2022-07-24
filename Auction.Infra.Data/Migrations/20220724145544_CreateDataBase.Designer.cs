@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Auction.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220719164444_ChangeColumnTblDetailProduct")]
-    partial class ChangeColumnTblDetailProduct
+    [Migration("20220724145544_CreateDataBase")]
+    partial class CreateDataBase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,12 +21,54 @@ namespace Auction.Infra.Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Auction.Domain.Models.Auction", b =>
+                {
+                    b.Property<int>("AuctionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BuyerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("ReceiveStatus")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("SellerId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("ShippingStatus")
+                        .HasColumnType("bit");
+
+                    b.HasKey("AuctionId");
+
+                    b.HasIndex("BuyerId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("SellerId");
+
+                    b.ToTable("Auctions");
+                });
+
             modelBuilder.Entity("Auction.Domain.Models.Category", b =>
                 {
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Banner")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CategoryName")
                         .HasColumnType("nvarchar(max)");
@@ -42,39 +84,59 @@ namespace Auction.Infra.Data.Migrations
                         new
                         {
                             CategoryId = 1,
+                            Banner = "/assets/images/auction/car/car-bg.png",
                             CategoryName = "خودرو",
-                            Image = "01.png"
+                            Image = "/assets/images/auction/01.png"
                         },
                         new
                         {
                             CategoryId = 2,
+                            Banner = "/assets/images/auction/jewelry/jwelry-bg.png",
                             CategoryName = "جواهر سازی",
-                            Image = "02.png"
+                            Image = "/assets/images/auction/02.png"
                         },
                         new
                         {
                             CategoryId = 3,
-                            CategoryName = "ساعت",
-                            Image = "03.png"
+                            Banner = "/assets/images/auction/coins/coin-bg.png",
+                            CategoryName = "سکه",
+                            Image = "/assets/images/auction/07.png"
                         },
                         new
                         {
                             CategoryId = 4,
-                            CategoryName = "الکترونیک",
-                            Image = "04.png"
-                        },
-                        new
-                        {
-                            CategoryId = 5,
-                            CategoryName = "ورزشی",
-                            Image = "05.png"
-                        },
-                        new
-                        {
-                            CategoryId = 6,
+                            Banner = "/assets/images/auction/realstate/real-bg.png",
                             CategoryName = "املاک",
-                            Image = "06.png"
+                            Image = "/assets/images/auction/06.png"
                         });
+                });
+
+            modelBuilder.Entity("Auction.Domain.Models.OfferHistory", b =>
+                {
+                    b.Property<int>("OfferHistoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OfferHistoryId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("OfferHistories");
                 });
 
             modelBuilder.Entity("Auction.Domain.Models.Product", b =>
@@ -112,6 +174,9 @@ namespace Auction.Infra.Data.Migrations
                     b.Property<string>("ProductName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductType")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
@@ -299,6 +364,52 @@ namespace Auction.Infra.Data.Migrations
                     b.ToTable("Wallets");
                 });
 
+            modelBuilder.Entity("Auction.Domain.Models.Auction", b =>
+                {
+                    b.HasOne("Auction.Domain.Models.User", "Buyer")
+                        .WithMany("AuctionBuyers")
+                        .HasForeignKey("BuyerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Auction.Domain.Models.Product", "Product")
+                        .WithMany("Auctions")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Auction.Domain.Models.User", "Seller")
+                        .WithMany("AuctionSellers")
+                        .HasForeignKey("SellerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Buyer");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Seller");
+                });
+
+            modelBuilder.Entity("Auction.Domain.Models.OfferHistory", b =>
+                {
+                    b.HasOne("Auction.Domain.Models.Product", "Product")
+                        .WithMany("OfferHistories")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Auction.Domain.Models.User", "User")
+                        .WithMany("OfferHistories")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Auction.Domain.Models.Product", b =>
                 {
                     b.HasOne("Auction.Domain.Models.Category", "Category")
@@ -369,6 +480,10 @@ namespace Auction.Infra.Data.Migrations
 
             modelBuilder.Entity("Auction.Domain.Models.Product", b =>
                 {
+                    b.Navigation("Auctions");
+
+                    b.Navigation("OfferHistories");
+
                     b.Navigation("ProductFeatures");
 
                     b.Navigation("ProductImages");
@@ -378,6 +493,12 @@ namespace Auction.Infra.Data.Migrations
 
             modelBuilder.Entity("Auction.Domain.Models.User", b =>
                 {
+                    b.Navigation("AuctionBuyers");
+
+                    b.Navigation("AuctionSellers");
+
+                    b.Navigation("OfferHistories");
+
                     b.Navigation("Products");
 
                     b.Navigation("Wallets");

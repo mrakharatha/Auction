@@ -56,7 +56,7 @@ namespace Auction.MVC.Controllers
 
             if (model.StartDate.ToDateTime(model.StartTime) <= DateTime.Now)
             {
-                ModelState.AddModelError(nameof(model.StartDate), "تاریخ یا زمان َروع از تاریخ جاری سیستم کوچکتر است");
+                ModelState.AddModelError(nameof(model.StartDate), "تاریخ یا زمان شروع از تاریخ جاری سیستم کوچکتر است");
                 GetData();
                 return View(model);
             }
@@ -101,7 +101,7 @@ namespace Auction.MVC.Controllers
 
             if (model.StartDate.ToDateTime(model.StartTime) <= DateTime.Now)
             {
-                ModelState.AddModelError(nameof(model.StartDate), "تاریخ یا زمان َروع از تاریخ جاری سیستم کوچکتر است");
+                ModelState.AddModelError(nameof(model.StartDate), "تاریخ یا زمان شروع از تاریخ جاری سیستم کوچکتر است");
                 GetData();
                 return View(model);
             }
