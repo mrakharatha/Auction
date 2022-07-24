@@ -7,6 +7,7 @@ using Auction.Domain.Convertors;
 using Auction.Domain.Interfaces;
 using Auction.Domain.Models;
 using Auction.Domain.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Auction.Application.Services
 {
@@ -20,6 +21,18 @@ namespace Auction.Application.Services
             _productRepository = productRepository;
             _settingService = settingService;
             _walletService = walletService;
+        }
+
+        public List<SelectListItem> GetProductType()
+        {
+            var items = new List<SelectListItem>()
+            {
+                new(){Value = null,Text = "لطفا انتخاب کنید"},
+                new(){Value = ProductType.New.ToString(),Text =ProductType.New.ToDisplay()},
+                new(){Value = ProductType.Old.ToString(),Text = ProductType.Old.ToDisplay()},
+            };
+
+            return items;
         }
 
         public ActivityViewModel GetActivity(int userId)
@@ -51,6 +64,7 @@ namespace Auction.Application.Services
                 Image = image,
                 StartDate = model.StartDate.ToDateTime(model.StartTime),
                 EndDate = model.EndDate.ToDateTime(model.EndTime),
+                ProductType = model.ProductType
             };
 
             AddProduct(product);
@@ -86,6 +100,7 @@ namespace Auction.Application.Services
             product.ProductName = model.ProductName;
             product.Price = model.Price;
             product.Description = model.Description;
+            product.ProductType = model.ProductType;
             product.Image = image;
             product.StartDate = model.StartDate.ToDateTime(model.StartTime);
             product.EndDate = model.EndDate.ToDateTime(model.EndTime);

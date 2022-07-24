@@ -1,6 +1,7 @@
 ﻿using System;
 using Auction.Application.Interfaces;
 using Auction.Application.Utilities;
+using Auction.Domain.Convertors;
 using Auction.Domain.Models;
 using Auction.Domain.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -45,6 +46,20 @@ namespace Auction.MVC.Controllers
                 GetData();
                 return View(model);
             }
+
+            if(model.StartDate.ToDateTime(model.StartTime)>=model.EndDate.ToDateTime(model.EndTime))
+            {
+                ModelState.AddModelError(nameof(model.EndDate),"تاریخ یا زمان اتمام از تاریخ شروع کوچکتر است");
+                GetData();
+                return View(model);
+            }
+
+            if (model.StartDate.ToDateTime(model.StartTime) <= DateTime.Now)
+            {
+                ModelState.AddModelError(nameof(model.StartDate), "تاریخ یا زمان َروع از تاریخ جاری سیستم کوچکتر است");
+                GetData();
+                return View(model);
+            }
             _productService.AddProduct(model);
             return RedirectToAction("Index", "Product");
         }
@@ -52,6 +67,7 @@ namespace Auction.MVC.Controllers
         public void GetData()
         {
             ViewData["Category"] = new SelectList(_categoryService.GetCategory(), "Value", "Text");
+            ViewData["ProductType"] = new SelectList(_productService.GetProductType(), "Value", "Text");
         }
 
         public IActionResult Edit(int id)
@@ -75,6 +91,21 @@ namespace Auction.MVC.Controllers
                 GetData();
                 return View(model);
             }
+
+            if (model.StartDate.ToDateTime(model.StartTime) >= model.EndDate.ToDateTime(model.EndTime))
+            {
+                ModelState.AddModelError(nameof(model.EndDate), "تاریخ یا زمان اتمام از تاریخ شروع کوچکتر است");
+                GetData();
+                return View(model);
+            }
+
+            if (model.StartDate.ToDateTime(model.StartTime) <= DateTime.Now)
+            {
+                ModelState.AddModelError(nameof(model.StartDate), "تاریخ یا زمان َروع از تاریخ جاری سیستم کوچکتر است");
+                GetData();
+                return View(model);
+            }
+
             _productService.UpdateProduct(model);
             return RedirectToAction("Index", "Product");
         }

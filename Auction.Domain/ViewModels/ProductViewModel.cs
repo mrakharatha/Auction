@@ -9,7 +9,9 @@ namespace Auction.Domain.ViewModels
     public class ProductViewModel
     {
         public int UserId { get; set; }
-
+        [Display(Name = "نوع محصول")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        public ProductType? ProductType { get; set; }
         [Display(Name = "دسته بندی")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public int? CategoryId { get; set; }
@@ -51,6 +53,9 @@ namespace Auction.Domain.ViewModels
 
         public int ProductId { get; set; }
         public int UserId { get; set; }
+        [Display(Name = "نوع محصول")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        public ProductType? ProductType { get; set; }
 
         [Display(Name = "دسته بندی")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
@@ -112,7 +117,7 @@ namespace Auction.Domain.ViewModels
         public List<ProductImage> ProductImages { get; set; }
         public List<ProductFeature> ProductFeatures { get; set; }
         public List<OfferHistory> OfferHistories { get; set; }
-
+        public string ProductType { get; set; }
     }
     public class ProductImageViewModel
     {

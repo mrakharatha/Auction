@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Auction.Application.Utilities;
 using Auction.Domain.Convertors;
 using Auction.Domain.Interfaces;
 using Auction.Domain.Models;
@@ -104,6 +105,7 @@ namespace Auction.Infra.Data.Repository
                 {
                     ProductId = x.ProductId,
                     ProductName = x.ProductName,
+                    ProductType= x.ProductType.ToDisplay(DisplayProperty.Name),
                     Price = x.Price,
                     FullName = x.User.FullName,
                     Description = x.Description,
@@ -145,7 +147,8 @@ namespace Auction.Infra.Data.Repository
                      Price = x.Price,
                      ProductId = x.ProductId,
                      ProductName = x.ProductName,
-                     UserId = x.UserId
+                     UserId = x.UserId,
+                     ProductType = x.ProductType
                  })
                  .SingleOrDefault();
         }

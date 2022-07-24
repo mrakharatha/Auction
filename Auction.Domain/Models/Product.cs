@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Auction.Domain.Models
@@ -13,6 +14,12 @@ namespace Auction.Domain.Models
         [Display(Name = "دسته بندی")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public int? CategoryId { get; set; }
+
+        [Display(Name = "نوع محصول")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        public ProductType? ProductType { get; set; }
+
+
         [Display(Name = "نام محصول")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public string ProductName { get; set; }
@@ -23,7 +30,7 @@ namespace Auction.Domain.Models
         public string Image { get; set; }
         public string Description { get; set; }
 
-     
+
         public bool IsFinish { get; set; }
 
         [Display(Name = "تاریخ شروع")]
@@ -34,7 +41,7 @@ namespace Auction.Domain.Models
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public DateTime EndDate { get; set; }
 
-        public DateTime CreateDate { get; set; }=DateTime.Now;
+        public DateTime CreateDate { get; set; } = DateTime.Now;
         public DateTime? DeleteDate { get; set; }
 
         #region Relations
@@ -47,5 +54,13 @@ namespace Auction.Domain.Models
         public List<OfferHistory> OfferHistories { get; set; }
         public List<Auction> Auctions { get; set; }
         #endregion
+    }
+
+    public enum ProductType
+    {
+        [Display(Name = "نو")]
+        New = 1,
+        [Display(Name = "دسته دوم")]
+        Old = 2,
     }
 }

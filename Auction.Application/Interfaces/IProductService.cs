@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Auction.Application.Utilities;
 using Auction.Domain.Models;
 using Auction.Domain.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Auction.Application.Interfaces
 {
@@ -13,7 +14,7 @@ namespace Auction.Application.Interfaces
         List<Product> GetProducts(int? categoryId,string filter,DateTime dateTime);
         void AddProduct(ProductViewModel model);
         void AddProduct(Product product);
-
+        List<SelectListItem> GetProductType();
         Product GetProduct(int productId);
         ProductDetailViewModel GetProductDetail(int productId);
         ProductEditViewModel GetProductViewModel(int productId);
